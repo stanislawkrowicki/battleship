@@ -6,3 +6,17 @@ subprojects {
         mavenCentral()
     }
 }
+
+tasks.register('runClient') {
+    group = 'application'
+    description = 'Runs the client application'
+    dependsOn(':client:run')
+}
+
+tasks.register('runServer') {
+    group = 'application'
+    description = 'Runs the server application'
+    dependsOn(':server:run')
+}
+
+defaultTasks 'runClient'
