@@ -1,12 +1,8 @@
 subprojects {
-//    group 'com.put.battleship'
+    group 'com.put.battleship'
     version '1.0-SNAPSHOT'
 
     repositories {
         mavenCentral()
     }
-
-    dependencies {
-    }
-
 }
