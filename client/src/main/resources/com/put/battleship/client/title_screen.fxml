@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="1166.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="1166.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.battleship.client.SceneController">
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" style="-fx-background-color: #ADD8E6;">
          <children>
@@ -17,7 +16,7 @@
                   <Image url="@title-ship.png" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" prefHeight="123.0" prefWidth="268.0" text="BEGIN!" textFill="#bc0000">
+            <Button mnemonicParsing="false" onAction="#switchToLoadingScreen" prefHeight="123.0" prefWidth="268.0" text="BEGIN!" textFill="#bc0000">
                <font>
                   <Font name="Comic Sans MS" size="36.0" />
                </font>
