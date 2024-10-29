@@ -16,26 +16,21 @@ public class SceneController {
 
     public void switchScene(ActionEvent event, String fxmlFile) throws IOException {
         root = FXMLLoader.load(getClass().getResource(fxmlFile));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.getScene().setRoot(root);
         stage.show();
-
     }
-    public void switchToLoadingScreen(ActionEvent event) throws IOException{
+
+    public void switchToLoadingScreen(ActionEvent event) throws IOException {
         switchScene(event, "loading_screen.fxml");
     }
 
-    public void switchToBattleScreen(ActionEvent event) throws IOException{
-
-
+    public void switchToBattleScreen(ActionEvent event) throws IOException {
         switchScene(event, "battle_screen.fxml");
-
-
     }
-    public void switchToTitleScreen(ActionEvent event) throws IOException{
+
+    public void switchToTitleScreen(ActionEvent event) throws IOException {
         switchScene(event, "title_screen.fxml");
-
     }
-
 
 }

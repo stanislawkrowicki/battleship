@@ -19,13 +19,14 @@ public class BattleController {
     private static final int SPACING_BETWEEN_GRIDS = 100;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         GridPane gridPane1 = createGrid(Color.YELLOW);
         GridPane gridPane2 = createGrid(Color.LIGHTGREEN);
 
         hBoxVirtual.getChildren().addAll(gridPane1, gridPane2);
     }
-    private GridPane createGrid(Color color){
+
+    private GridPane createGrid(Color color) {
         GridPane gridPane = new GridPane();
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
@@ -38,7 +39,9 @@ public class BattleController {
         }
         return gridPane;
     }
+
     SceneController sceneController = new SceneController();
+
     public void switchToEndScreen(ActionEvent event) throws IOException {
         sceneController.switchScene(event, "end_screen.fxml");
 
