@@ -19,6 +19,13 @@ application {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.mockito:mockito-core:5.14.2'
+    implementation 'io.github.cdimascio:dotenv-java:3.0.0'
+    implementation platform('io.netty:netty-bom:4.1.116.Final')
+    implementation 'io.netty:netty-codec'
+    implementation 'io.netty:netty-codec-http'
+    implementation 'io.netty:netty-transport'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.0'
 }
 
 test {
