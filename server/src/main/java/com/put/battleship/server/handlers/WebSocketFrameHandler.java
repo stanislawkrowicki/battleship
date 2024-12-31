@@ -1,29 +1,42 @@
 package com.put.battleship.server.handlers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.put.battleship.server.IncomingWebSocketFrame;
+import com.put.battleship.server.OutgoingFrameType;
+import com.put.battleship.server.OutgoingWebSocketFrame;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
-        System.out.println("Received: " + frame.text());
-        Map<String, String> message = new HashMap<>();
-        message.put("type", "message");
-        message.put("content", "You sent: " + frame.text());
+    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame webSocketFrame) {
+        System.out.println("Received: " + webSocketFrame.text());
 
+        IncomingWebSocketFrame frame = null;
         try {
-            String jsonString = objectMapper.writeValueAsString(message);
-            ctx.writeAndFlush(new TextWebSocketFrame(jsonString));
-        } catch (Exception e) {
-            e.printStackTrace();
+            frame = objectMapper.readValue(webSocketFrame.text(), IncomingWebSocketFrame.class);
+        } catch (JsonProcessingException e) {
+            try {
+                System.out.println("Got invalid frame: " + webSocketFrame.text() + "\n" + e.getMessage());
+                sendInvalidFrame(ctx);
+                return;
+            } catch (Exception mappingException) {
+                System.err.println("Error while sending invalid frame!");
+                mappingException.printStackTrace();
+            }
         }
+
+        if (frame == null) {
+            System.err.println("Frame is null! Should not happen!");
+            return;
+        }
+
+        IncomingFrameHandler handler = IncomingFrameHandlerFactory.getHandler(frame);
+        handler.handle();
     }
 
     @Override
@@ -36,4 +49,11 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
         cause.printStackTrace();
         ctx.close();
     }
+
+    public void sendInvalidFrame(ChannelHandlerContext ctx) throws Exception {
+        OutgoingWebSocketFrame invalidFrame = new OutgoingWebSocketFrame(OutgoingFrameType.INVALID_FRAME, "");
+        String jsonString = objectMapper.writeValueAsString(invalidFrame);
+        ctx.writeAndFlush(new TextWebSocketFrame(jsonString));
+    }
+
 }
