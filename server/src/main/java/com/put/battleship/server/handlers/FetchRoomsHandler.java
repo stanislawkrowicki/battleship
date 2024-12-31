@@ -2,14 +2,14 @@ package com.put.battleship.server.handlers;
 
 import com.put.battleship.server.frames.IncomingWebSocketFrame;
 
-public class JoinGameHandler extends IncomingFrameHandler {
+public class FetchRoomsHandler extends IncomingFrameHandler {
 
-    public JoinGameHandler(IncomingWebSocketFrame frame) {
+    public FetchRoomsHandler(IncomingWebSocketFrame frame) {
         super(frame);
     }
 
     @Override
     public void handle() {
-        System.out.println("Handling join game");
+        System.out.println("Handling fetch rooms");
     }
 }

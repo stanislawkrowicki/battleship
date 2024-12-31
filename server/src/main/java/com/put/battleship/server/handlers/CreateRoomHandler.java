@@ -2,14 +2,14 @@ package com.put.battleship.server.handlers;
 
 import com.put.battleship.server.frames.IncomingWebSocketFrame;
 
-public class CreateGameHandler extends IncomingFrameHandler {
+public class CreateRoomHandler extends IncomingFrameHandler {
 
-    public CreateGameHandler(IncomingWebSocketFrame frame) {
+    public CreateRoomHandler(IncomingWebSocketFrame frame) {
         super(frame);
     }
 
     @Override
     public void handle() {
-        System.out.println("Handling create game");
+        System.out.println("Handling create room");
     }
 }
