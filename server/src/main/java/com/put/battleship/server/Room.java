@@ -1,5 +1,7 @@
 package com.put.battleship.server;
 
+import com.put.battleship.server.exceptions.RoomIsFullException;
+
 import java.util.ArrayList;
 
 public class Room {
@@ -30,11 +32,11 @@ public class Room {
         return players;
     }
 
-    public void addPlayer(Player player) throws Exception {
+    public void addPlayer(Player player) throws RoomIsFullException {
         if (players.size() < size)
             players.add(player);
         else
-            throw new Exception("Room is full");
+            throw new RoomIsFullException("Room is full");
     }
 
 }

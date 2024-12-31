@@ -1,4 +1,6 @@
 package com.put.battleship.server;
 
-public record Player(String id, String name) {
+import io.netty.channel.ChannelHandlerContext;
+
+public record Player(String id, String name, ChannelHandlerContext ctx) {
 }

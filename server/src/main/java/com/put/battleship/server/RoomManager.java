@@ -1,23 +1,34 @@
 package com.put.battleship.server;
 
+import com.put.battleship.server.exceptions.RoomAlreadyExistsException;
+import com.put.battleship.server.exceptions.RoomIsFullException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RoomManager {
-    private final HashMap<String, Room> rooms = new HashMap<>();
+    private static final HashMap<String, Room> rooms = new HashMap<>();
 
-    public void addRoom(Room room) throws Exception {
+    public static void addRoom(Room room) throws RoomAlreadyExistsException {
         if (!rooms.containsKey(room.getId()))
             rooms.put(room.getId(), room);
         else
-            throw new Exception("Room already exists");
+            throw new RoomAlreadyExistsException("Room already exists");
     }
 
-    public Room getRoom(String id) {
+    public static Room getRoom(String id) {
         return rooms.get(id);
     }
 
-    public ArrayList<Room> getRooms() {
+    public static ArrayList<Room> getRooms() {
         return new ArrayList<>(rooms.values());
+    }
+
+    public static void removeRoom(String id) {
+        rooms.remove(id);
+    }
+
+    public static void addPlayerToRoom(String roomId, Player player) throws RoomIsFullException {
+        rooms.get(roomId).addPlayer(player);
     }
 }

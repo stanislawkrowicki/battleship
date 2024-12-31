@@ -1,11 +1,12 @@
 package com.put.battleship.server.handlers;
 
 import com.put.battleship.server.frames.IncomingWebSocketFrame;
+import io.netty.channel.ChannelHandlerContext;
 
 public class SyncHandler extends IncomingFrameHandler {
 
-    public SyncHandler(IncomingWebSocketFrame frame) {
-        super(frame);
+    public SyncHandler(IncomingWebSocketFrame frame, ChannelHandlerContext ctx) {
+        super(frame, ctx);
     }
 
     @Override

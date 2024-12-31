@@ -1,5 +1,6 @@
 package com.put.battleship.server.handlers;
 
+import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.put.battleship.server.frames.IncomingWebSocketFrame;
 import com.put.battleship.server.frames.OutgoingFrameType;
@@ -14,15 +15,13 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame webSocketFrame) {
-        System.out.println("Received: " + webSocketFrame.text());
-
         IncomingWebSocketFrame frame = null;
         try {
             frame = objectMapper.readValue(webSocketFrame.text(), IncomingWebSocketFrame.class);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             try {
                 System.out.println("Got invalid frame: " + webSocketFrame.text() + "\n" + e.getMessage());
-                sendInvalidFrame(ctx);
+                throwInvalidFrame(ctx);
                 return;
             } catch (Exception mappingException) {
                 System.err.println("Error while sending invalid frame!");
@@ -35,7 +34,7 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
             return;
         }
 
-        IncomingFrameHandler handler = IncomingFrameHandlerFactory.getHandler(frame);
+        IncomingFrameHandler handler = IncomingFrameHandlerFactory.getHandler(frame, ctx);
         handler.handle();
     }
 
@@ -50,7 +49,7 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
         ctx.close();
     }
 
-    public void sendInvalidFrame(ChannelHandlerContext ctx) throws Exception {
+    public static void throwInvalidFrame(ChannelHandlerContext ctx) throws Exception {
         OutgoingWebSocketFrame invalidFrame = new OutgoingWebSocketFrame(OutgoingFrameType.INVALID_FRAME, "");
         String jsonString = objectMapper.writeValueAsString(invalidFrame);
         ctx.writeAndFlush(new TextWebSocketFrame(jsonString));
