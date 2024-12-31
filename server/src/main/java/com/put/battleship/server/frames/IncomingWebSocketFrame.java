@@ -1,4 +1,9 @@
 package com.put.battleship.server.frames;
 
-public record IncomingWebSocketFrame(IncomingFrameType type, String payload) {
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(using = FrameDeserializer.class)
+public class IncomingWebSocketFrame {
+    public IncomingFrameType type;
+    public Object payload;
 }

@@ -8,4 +8,5 @@ module com.put.battleship.server {
     exports com.put.battleship.server.handlers;
     exports com.put.battleship.server.frames;
     exports com.put.battleship.server.exceptions;
+    exports com.put.battleship.server.payloads;
 }
