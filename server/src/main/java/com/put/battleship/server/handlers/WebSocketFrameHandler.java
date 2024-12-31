@@ -1,9 +1,9 @@
 package com.put.battleship.server.handlers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.put.battleship.server.IncomingWebSocketFrame;
-import com.put.battleship.server.OutgoingFrameType;
-import com.put.battleship.server.OutgoingWebSocketFrame;
+import com.put.battleship.server.frames.IncomingWebSocketFrame;
+import com.put.battleship.server.frames.OutgoingFrameType;
+import com.put.battleship.server.frames.OutgoingWebSocketFrame;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;

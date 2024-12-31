@@ -1,6 +1,6 @@
 package com.put.battleship.server.handlers;
 
-import com.put.battleship.server.IncomingWebSocketFrame;
+import com.put.battleship.server.frames.IncomingWebSocketFrame;
 
 public class ShootHandler extends IncomingFrameHandler {
 

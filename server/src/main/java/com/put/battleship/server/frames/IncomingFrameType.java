@@ -1,4 +1,4 @@
-package com.put.battleship.server;
+package com.put.battleship.server.frames;
 
 public enum IncomingFrameType {
     FETCH_SERVERS, CREATE_GAME, JOIN_GAME, SHOOT, SYNC
