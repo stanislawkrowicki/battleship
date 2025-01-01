@@ -17,7 +17,7 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
         ClientFrame frame = null;
         try {
             frame = objectMapper.readValue(webSocketFrame.text(), ClientFrame.class);
-        } catch (JacksonException e) {
+        } catch (Exception e) {
             try {
                 System.out.println("Got invalid frame: " + webSocketFrame.text() + "\n" + e.getMessage());
                 throwInvalidFrame(ctx);
