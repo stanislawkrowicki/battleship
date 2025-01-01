@@ -1,10 +1,9 @@
 package com.put.battleship.server.handlers;
 
 import com.fasterxml.jackson.core.JacksonException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.put.battleship.server.frames.IncomingWebSocketFrame;
-import com.put.battleship.server.frames.OutgoingFrameType;
-import com.put.battleship.server.frames.OutgoingWebSocketFrame;
+import com.put.battleship.shared.frames.ClientFrame;
+import com.put.battleship.shared.frames.ServerFrameType;
+import com.put.battleship.shared.frames.ServerFrame;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -15,9 +14,9 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame webSocketFrame) {
-        IncomingWebSocketFrame frame = null;
+        ClientFrame frame = null;
         try {
-            frame = objectMapper.readValue(webSocketFrame.text(), IncomingWebSocketFrame.class);
+            frame = objectMapper.readValue(webSocketFrame.text(), ClientFrame.class);
         } catch (JacksonException e) {
             try {
                 System.out.println("Got invalid frame: " + webSocketFrame.text() + "\n" + e.getMessage());
@@ -34,7 +33,7 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
             return;
         }
 
-        IncomingFrameHandler handler = IncomingFrameHandlerFactory.getHandler(frame, ctx);
+        ClientFrameHandler handler = ClientFrameHandlerFactory.getHandler(frame, ctx);
         handler.handle();
     }
 
@@ -50,7 +49,7 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
     }
 
     public static void throwInvalidFrame(ChannelHandlerContext ctx) throws Exception {
-        OutgoingWebSocketFrame invalidFrame = new OutgoingWebSocketFrame(OutgoingFrameType.INVALID_FRAME, "");
+        ServerFrame invalidFrame = new ServerFrame(ServerFrameType.INVALID_FRAME, "");
         String jsonString = objectMapper.writeValueAsString(invalidFrame);
         ctx.writeAndFlush(new TextWebSocketFrame(jsonString));
     }

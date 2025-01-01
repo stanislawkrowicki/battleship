@@ -1,10 +1,10 @@
 package com.put.battleship.server.handlers;
 
-import com.put.battleship.server.frames.IncomingWebSocketFrame;
+import com.put.battleship.shared.frames.ClientFrame;
 import io.netty.channel.ChannelHandlerContext;
 
-public class IncomingFrameHandlerFactory {
-    public static IncomingFrameHandler getHandler(IncomingWebSocketFrame frame, ChannelHandlerContext ctx) {
+public class ClientFrameHandlerFactory {
+    public static ClientFrameHandler getHandler(ClientFrame frame, ChannelHandlerContext ctx) {
         return switch (frame.type) {
             case FETCH_SERVERS -> new FetchRoomsHandler(frame, ctx);
             case CREATE_ROOM -> new CreateRoomHandler(frame, ctx);

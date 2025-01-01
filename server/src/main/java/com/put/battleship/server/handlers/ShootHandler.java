@@ -1,11 +1,11 @@
 package com.put.battleship.server.handlers;
 
-import com.put.battleship.server.frames.IncomingWebSocketFrame;
+import com.put.battleship.shared.frames.ClientFrame;
 import io.netty.channel.ChannelHandlerContext;
 
-public class ShootHandler extends IncomingFrameHandler {
+public class ShootHandler extends ClientFrameHandler {
 
-    public ShootHandler(IncomingWebSocketFrame frame, ChannelHandlerContext ctx) {
+    public ShootHandler(ClientFrame frame, ChannelHandlerContext ctx) {
         super(frame, ctx);
     }
 

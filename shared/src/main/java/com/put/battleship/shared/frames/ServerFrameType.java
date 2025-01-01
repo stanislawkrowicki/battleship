@@ -1,5 +1,5 @@
-package com.put.battleship.server.frames;
+package com.put.battleship.shared.frames;
 
-public enum OutgoingFrameType {
+public enum ServerFrameType {
     INVALID_FRAME, SERVERS, ROOM_CREATED, ROOM_ALREADY_EXISTS, ROOM_JOINED, GAME_STARTED, GAME_SYNC, GAME_OVER
 }

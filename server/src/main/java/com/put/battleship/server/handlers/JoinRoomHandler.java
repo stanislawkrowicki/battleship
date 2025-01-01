@@ -1,11 +1,11 @@
 package com.put.battleship.server.handlers;
 
-import com.put.battleship.server.frames.IncomingWebSocketFrame;
+import com.put.battleship.shared.frames.ClientFrame;
 import io.netty.channel.ChannelHandlerContext;
 
-public class JoinRoomHandler extends IncomingFrameHandler {
+public class JoinRoomHandler extends ClientFrameHandler {
 
-    public JoinRoomHandler(IncomingWebSocketFrame frame, ChannelHandlerContext ctx) {
+    public JoinRoomHandler(ClientFrame frame, ChannelHandlerContext ctx) {
         super(frame, ctx);
     }
 

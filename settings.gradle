@@ -1,3 +1,4 @@
 rootProject.name = "Battleship"
 
-include 'client', 'server'
+include 'client', 'server', 'shared'
+

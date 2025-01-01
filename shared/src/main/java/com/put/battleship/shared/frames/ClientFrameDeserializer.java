@@ -1,15 +1,15 @@
-package com.put.battleship.server.frames;
+package com.put.battleship.shared.frames;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.put.battleship.server.payloads.CreateRoomPayload;
+import com.put.battleship.shared.payloads.CreateRoomPayload;
 
 import java.io.IOException;
 
-public class FrameDeserializer extends JsonDeserializer<Object> {
+public class ClientFrameDeserializer extends JsonDeserializer<Object> {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     @Override
@@ -17,14 +17,14 @@ public class FrameDeserializer extends JsonDeserializer<Object> {
         JsonNode node = p.getCodec().readTree(p);
         JsonNode payloadNode = node.get("payload");
 
-        IncomingFrameType type = IncomingFrameType.valueOf(node.get("type").asText());
-        IncomingWebSocketFrame frame = new IncomingWebSocketFrame();
+        ClientFrameType type = ClientFrameType.valueOf(node.get("type").asText());
+        ClientFrame frame = new ClientFrame(type, null);
         frame.type = type;
 
-        if (type == IncomingFrameType.CREATE_ROOM) {
+        if (type == ClientFrameType.CREATE_ROOM) {
             frame.payload = mapper.treeToValue(payloadNode, CreateRoomPayload.class);
         } else {
-            throw new IllegalArgumentException("Unknown frame type: " + type);
+            throw new IllegalArgumentException("Unknown client frame type: " + type);
         }
 
         return frame;
