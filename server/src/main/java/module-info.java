@@ -5,6 +5,7 @@ module com.put.battleship.server {
     requires io.netty.codec.http;
     requires java.sql;
     requires com.put.battleship.shared;
+    requires io.netty.common;
     exports com.put.battleship.server;
     exports com.put.battleship.server.handlers;
     exports com.put.battleship.server.exceptions;

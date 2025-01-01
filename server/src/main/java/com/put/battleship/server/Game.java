@@ -1,17 +1,19 @@
 package com.put.battleship.server;
 
+import java.util.UUID;
+
 public class Game {
-    private final String id;
+    private final UUID id;
     private final Player host;
     private Player guest;
     private boolean isStarted = false;
 
-    public Game(String id, Player host) {
-        this.id = id;
+    public Game(Player host) {
         this.host = host;
+        this.id = UUID.randomUUID();
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 

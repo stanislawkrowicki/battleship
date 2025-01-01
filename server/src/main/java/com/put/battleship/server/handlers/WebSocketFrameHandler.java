@@ -1,6 +1,8 @@
 package com.put.battleship.server.handlers;
 
 import com.fasterxml.jackson.core.JacksonException;
+import com.put.battleship.server.Player;
+import com.put.battleship.server.PlayerManager;
 import com.put.battleship.shared.frames.ClientFrame;
 import com.put.battleship.shared.frames.ServerFrameType;
 import com.put.battleship.shared.frames.ServerFrame;
@@ -40,6 +42,8 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
         System.out.println("Client connected");
+        Player createdPlayer = PlayerManager.createPlayer();
+        ConnectionHandler.mapPlayerToChannel(createdPlayer.getId(), ctx);
     }
 
     @Override
