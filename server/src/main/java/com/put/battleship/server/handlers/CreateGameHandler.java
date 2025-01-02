@@ -9,11 +9,8 @@ import com.put.battleship.server.PlayerManager;
 import com.put.battleship.shared.frames.ClientFrame;
 import com.put.battleship.shared.frames.ServerFrameType;
 import com.put.battleship.shared.frames.ServerFrame;
-import com.put.battleship.shared.payloads.CreateGamePayload;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-
-import java.util.UUID;
 
 public class CreateGameHandler extends ClientFrameHandler {
 
@@ -23,7 +20,6 @@ public class CreateGameHandler extends ClientFrameHandler {
 
     @Override
     public void handle() {
-        CreateGamePayload payload = (CreateGamePayload) this.frame.payload;
         Player player = PlayerManager.getPlayerFromContext(this.ctx);
 
         Game game = new Game(player);
