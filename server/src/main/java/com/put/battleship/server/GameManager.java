@@ -13,7 +13,7 @@ public class GameManager {
     }
 
     public static Game getGame(String id) {
-        return games.stream().filter(game -> game.getId().equals(id)).findFirst().orElse(null);
+        return games.stream().filter(game -> game.getId().toString().equals(id)).findFirst().orElse(null);
     }
 
     public static Game getGameByHost(Player host) {

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.put.battleship.shared.payloads.CreateGamePayload;
+import com.put.battleship.shared.payloads.JoinGamePayload;
 
 import java.io.IOException;
 
@@ -28,10 +29,15 @@ public class ClientFrameDeserializer extends JsonDeserializer<Object> {
         ClientFrame frame = new ClientFrame(type, null);
         frame.type = type;
 
-        if (type == ClientFrameType.CREATE_GAME) {
-            frame.payload = mapper.treeToValue(payloadNode, CreateGamePayload.class);
-        } else {
-            throw new IllegalArgumentException("Unknown client frame type: " + type);
+        switch (type) {
+            case CREATE_GAME:
+                frame.payload = mapper.treeToValue(payloadNode, CreateGamePayload.class);
+                break;
+            case JOIN_GAME:
+                frame.payload = mapper.treeToValue(payloadNode, JoinGamePayload.class);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown client frame type to deserialize: " + type);
         }
 
         return frame;
