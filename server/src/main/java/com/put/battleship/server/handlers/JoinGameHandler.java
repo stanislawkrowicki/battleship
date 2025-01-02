@@ -12,9 +12,6 @@ import com.put.battleship.shared.frames.ServerFrame;
 import com.put.battleship.shared.frames.ServerFrameType;
 import com.put.battleship.shared.payloads.JoinGamePayload;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-
-import static com.put.battleship.server.handlers.WebSocketFrameHandler.objectMapper;
 
 public class JoinGameHandler extends ClientFrameHandler {
 
@@ -29,29 +26,11 @@ public class JoinGameHandler extends ClientFrameHandler {
 
         try {
             GameManager.connectPlayerToRoom(player, payload.id());
-            ServerFrame successFrame = new ServerFrame(ServerFrameType.GAME_JOINED, payload.id());
-            try {
-                String json = objectMapper.writeValueAsString(successFrame);
-                this.ctx.writeAndFlush(new TextWebSocketFrame(json));
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+            this.sendFrame(new ServerFrame(ServerFrameType.GAME_JOINED, payload.id()));
         } catch (GameDoesNotExistException notExistException) {
-            ServerFrame invalidFrame = new ServerFrame(ServerFrameType.GAME_NOT_FOUND, payload.id());
-            try {
-                String jsonString = objectMapper.writeValueAsString(invalidFrame);
-                ctx.writeAndFlush(new TextWebSocketFrame(jsonString));
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+            this.sendFrame(new ServerFrame(ServerFrameType.GAME_NOT_FOUND, payload.id()));
         } catch (GameIsFullException isFullException) {
-            ServerFrame invalidFrame = new ServerFrame(ServerFrameType.GAME_IS_FULL, payload.id());
-            try {
-                String jsonString = objectMapper.writeValueAsString(invalidFrame);
-                ctx.writeAndFlush(new TextWebSocketFrame(jsonString));
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+            this.sendFrame(new ServerFrame(ServerFrameType.GAME_IS_FULL, payload.id()));
         }
     }
 }

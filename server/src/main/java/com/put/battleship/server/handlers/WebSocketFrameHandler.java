@@ -12,7 +12,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
-    public static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame webSocketFrame) {
