@@ -62,15 +62,11 @@ public class BattleShips implements iBattleships {
     public boolean handleAttack(Integer rowIndex, Integer columnIndex) throws AttackNotPermitted {
         if (!canAttack)
             throw new AttackNotPermitted();
-        boolean hit = enemyBoard.isShipInBoard(rowIndex, columnIndex);
-        if (!hit) {
-            enemyBoard.miss(rowIndex, columnIndex);
+
+        boolean hit = enemyBoard.handleAttack(rowIndex, columnIndex);
+        if (!hit)
             canAttack = true;
-            return false;
-        } else {
-            enemyBoard.damage(rowIndex, columnIndex);
-        }
-        return true;
+        return hit;
     }
 
     public boolean getCanAttack() {

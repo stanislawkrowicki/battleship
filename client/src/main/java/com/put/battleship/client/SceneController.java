@@ -1,6 +1,7 @@
 package com.put.battleship.client;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -13,7 +14,7 @@ public class SceneController {
     private Parent root;
 
 
-    public void switchScene(ActionEvent event, String fxmlFile) throws IOException {
+    public void switchScene(Event event, String fxmlFile) throws IOException {
         root = FXMLLoader.load(getClass().getResource(fxmlFile));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.getScene().setRoot(root);

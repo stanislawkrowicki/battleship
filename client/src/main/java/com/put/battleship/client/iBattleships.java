@@ -33,4 +33,6 @@ public interface iBattleships {
     boolean enemyCellNotYetShot(int row, int col);
 
     boolean yourCellNotYetShot(int row, int col);
+
+    boolean youWin();
 }

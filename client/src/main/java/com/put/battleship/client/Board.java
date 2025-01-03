@@ -43,10 +43,6 @@ public class Board {
         return ship;
     }
 
-    public void damage(int row, int col) {
-        boardMatrix[row][col] = -boardMatrix[row][col];
-    }
-
     public boolean cellNotYetShot(int row, int col) {
         return boardMatrix[row][col] >= 0;
     }
@@ -103,10 +99,6 @@ public class Board {
 //    }
 
 
-    public void miss(int row, int col) {
-        boardMatrix[row][col] = -shipCount() - 1;
-    }
-
     public boolean allShipsGone() {
         for (int row = 0; row < sizey; row++) {
             for (int col = 0; col < sizex; col++) {
@@ -116,5 +108,15 @@ public class Board {
             }
         }
         return true;
+    }
+
+    public boolean handleAttack(Integer row, Integer col) {
+        boolean hit = isShipInBoard(row, col);
+        if (!hit) {
+            boardMatrix[row][col] = -shipCount() - 1;
+        } else {
+            boardMatrix[row][col] = -boardMatrix[row][col];
+        }
+        return hit;
     }
 }

@@ -1,6 +1,7 @@
 package com.put.battleship.client;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -56,9 +57,9 @@ public class BattleController extends GridController {
                             if (BattleShipsApp.model.getCanAttack()) {
                                 try {
                                     handleAttack(rectangle);
-//                                    if(BattleShipsApp.model.youWin())
-//                                        switchToVictoryScreen(event);
-                                } catch (BattleShips.AttackNotPermitted e) {
+                                    if (BattleShipsApp.model.youWin())
+                                        switchToVictoryScreen(event);
+                                } catch (BattleShips.AttackNotPermitted | IOException e) {
                                     throw new RuntimeException(e);
                                 }
                             }
@@ -80,11 +81,11 @@ public class BattleController extends GridController {
         }
     }
 
-    public void switchToEndScreen(ActionEvent event) throws IOException {
+    public void switchToEndScreen(Event event) throws IOException {
         sceneController.switchScene(event, "end_screen.fxml");
     }
 
-    public void switchToVictoryScreen(ActionEvent event) throws IOException {
+    public void switchToVictoryScreen(Event event) throws IOException {
         sceneController.switchScene(event, "victory_screen.fxml");
     }
 }
