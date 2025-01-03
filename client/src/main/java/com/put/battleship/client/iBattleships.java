@@ -26,11 +26,6 @@ public interface iBattleships {
 
     boolean handleAttack(Integer rowIndex, Integer columnIndex) throws BattleShips.AttackNotPermitted;
 
-
-    Board getYourBoard();
-
-    Board getEnemyBoard();
-
     Color getYourBackgroundColor();
 
     Color getEnemyBackgroundColor();
