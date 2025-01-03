@@ -40,5 +40,10 @@ public class SceneController {
 
     }
 
+    public void switchToVictoryScreen(ActionEvent event) throws IOException {
+        switchScene(event, "victory_screen.fxml");
+
+    }
+
 
 }

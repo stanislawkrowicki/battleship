@@ -36,10 +36,10 @@ public class SetShipController extends GridController {
 
     private GridPane createGrid() {
         GridPane gridPane = new GridPane();
-        for (int row = 0; row < 10; row++) {
-            for (int col = 0; col < 10; col++) {
+        for (int row = 0; row < BattleShipsApp.model.getSizey(); row++) {
+            for (int col = 0; col < BattleShipsApp.model.getSizex(); col++) {
                 Rectangle rectangle = new Rectangle(RECTANGLE_WIDTH, RECTANGLE_HEIGHT);
-                rectangle.setFill(color(Math.random()));
+                rectangle.setFill(BattleShipsApp.model.getYourBackgroundColor());
                 rectangle.setOnMouseExited(event -> {
                     clearCurrentShip(rectangle);
                 });
