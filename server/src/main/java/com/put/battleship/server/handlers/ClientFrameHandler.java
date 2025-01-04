@@ -7,6 +7,8 @@ import com.put.battleship.shared.frames.ServerFrame;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
+import static com.put.battleship.server.handlers.WebSocketFrameHandler.sendFrameToCtx;
+
 public abstract class ClientFrameHandler {
     public static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -27,13 +29,7 @@ public abstract class ClientFrameHandler {
     }
 
     void sendFrame(ServerFrame frame) {
-        try {
-            String json = objectMapper.writeValueAsString(frame);
-            ctx.writeAndFlush(new TextWebSocketFrame(json));
-        } catch (JsonProcessingException e) {
-            System.out.println("Tried to send invalid frame: " + e.getMessage());
-            e.printStackTrace();
-        }
+        sendFrameToCtx(ctx, frame);
     }
 
     public abstract void handle();

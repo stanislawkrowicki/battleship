@@ -45,12 +45,12 @@ public class Game {
     public String getJoinCode() {
         return joinCode;
     }
-    
+
     public boolean isStarted() {
         return isStarted;
     }
 
-    public void setStarted(boolean started) {
-        isStarted = started;
+    public void start() {
+        isStarted = true;
     }
 }

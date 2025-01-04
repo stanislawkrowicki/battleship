@@ -1,6 +1,7 @@
 package com.put.battleship.server.handlers;
 
 import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.put.battleship.server.Player;
 import com.put.battleship.server.PlayerManager;
 import com.put.battleship.shared.frames.ClientFrame;
@@ -56,6 +57,16 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
         ServerFrame invalidFrame = new ServerFrame(ServerFrameType.INVALID_FRAME, "");
         String jsonString = objectMapper.writeValueAsString(invalidFrame);
         ctx.writeAndFlush(new TextWebSocketFrame(jsonString));
+    }
+
+    public static void sendFrameToCtx(ChannelHandlerContext ctx, ServerFrame frame) {
+        try {
+            String json = objectMapper.writeValueAsString(frame);
+            ctx.writeAndFlush(new TextWebSocketFrame(json));
+        } catch (JsonProcessingException e) {
+            System.out.println("Tried to send invalid frame: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 }
