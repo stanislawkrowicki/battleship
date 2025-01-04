@@ -7,6 +7,7 @@ import com.put.battleship.server.PlayerManager;
 import com.put.battleship.shared.frames.ClientFrame;
 import com.put.battleship.shared.frames.ServerFrameType;
 import com.put.battleship.shared.frames.ServerFrame;
+import com.put.battleship.shared.payloads.server.GameCreatedPayload;
 import io.netty.channel.ChannelHandlerContext;
 
 public class CreateGameHandler extends ClientFrameHandler {
@@ -18,12 +19,11 @@ public class CreateGameHandler extends ClientFrameHandler {
     @Override
     public void handle() {
         Player player = PlayerManager.getPlayerFromContext(this.ctx);
-        Game game = new Game(player);
+        Game game = GameManager.createGame(player);
 
-        GameManager.addGame(game);
+        System.out.println("Game created: " + game.getId() +
+                " with join code " + game.getJoinCode() + "for player " + game.getHost().getId());
 
-        System.out.println("Game created: " + game.getId() + " for player: " + game.getHost().getId());
-
-        this.sendFrame(new ServerFrame(ServerFrameType.GAME_CREATED, game.getId()));
+        this.sendFrame(new ServerFrame(ServerFrameType.GAME_CREATED, new GameCreatedPayload(game.getId().toString(), game.getJoinCode())));
     }
 }

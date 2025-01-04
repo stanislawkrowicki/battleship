@@ -12,8 +12,18 @@ public class GameManager {
         games.add(game);
     }
 
-    public static Game getGame(String id) {
+    public static Game createGame(Player host) {
+        Game game = new Game(host);
+        addGame(game);
+        return game;
+    }
+
+    public static Game getGameById(String id) {
         return games.stream().filter(game -> game.getId().toString().equals(id)).findFirst().orElse(null);
+    }
+
+    public static Game getGameByJoinCode(String joinCode) {
+        return games.stream().filter(game -> game.getJoinCode().equals(joinCode)).findFirst().orElse(null);
     }
 
     public static Game getGameByHost(Player host) {
@@ -28,9 +38,22 @@ public class GameManager {
         games.removeIf(game -> game.getId().toString().equals(id));
     }
 
-    public static void connectPlayerToRoom(Player player, String roomId) throws GameDoesNotExistException, GameIsFullException {
-        Game game = getGame(roomId);
+    public static void connectPlayerToRoomById(Player player, String roomId) throws GameDoesNotExistException, GameIsFullException {
+        Game game = getGameById(roomId);
 
+        if (game == null) {
+            throw new GameDoesNotExistException("Game does not exist.");
+        }
+        if (game.getGuest() != null || game.isStarted()) {
+            throw new GameIsFullException("There are already two players in the game.");
+        }
+
+        game.joinGuest(player);
+    }
+
+    public static void connectPlayerToRoomByJoinCode(Player player, String joinCode) throws GameDoesNotExistException, GameIsFullException {
+        Game game = getGameByJoinCode(joinCode);
+        
         if (game == null) {
             throw new GameDoesNotExistException("Game does not exist.");
         }
