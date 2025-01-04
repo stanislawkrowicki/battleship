@@ -25,7 +25,7 @@ public class GameManager {
     }
 
     public static void removeGame(String id) {
-        games.removeIf(game -> game.getId().equals(id));
+        games.removeIf(game -> game.getId().toString().equals(id));
     }
 
     public static void connectPlayerToRoom(Player player, String roomId) throws GameDoesNotExistException, GameIsFullException {
