@@ -1,5 +1,6 @@
 package com.put.battleship.client;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +14,18 @@ public class BattleShipsApp extends Application {
     public static iBattleships model = new BattleShips();
 
     public static void main(String[] args) {
+        Dotenv dotenv = Dotenv.configure().directory("../").load();
+
+        String host = dotenv.get("HOST");
+        int port = Integer.parseInt(dotenv.get("PORT"));
+
+        try {
+            new WebSocketClient(host, port).run();
+        } catch (InterruptedException e) {
+            System.out.println("Failed to connect to the server!!!");
+            e.printStackTrace();
+        }
+
         launch();
     }
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.put.battleship.shared.payloads.client.EmptyPayload;
 
 import java.io.IOException;
 
@@ -19,8 +20,11 @@ public class ServerFrameDeserializer extends JsonDeserializer<Object> {
         ServerFrameType type = ServerFrameType.valueOf(node.get("type").asText());
         ServerFrame frame = new ServerFrame(type, null);
 
-        throw new IllegalArgumentException("Unknown server frame type: " + type);
+        switch (type) {
+            case CONNECTED -> frame.payload = mapper.treeToValue(payloadNode, EmptyPayload.class);
+            default -> throw new IllegalArgumentException("Unknown server frame type: " + type);
+        }
 
-        // return frame;
+        return frame;
     }
 }

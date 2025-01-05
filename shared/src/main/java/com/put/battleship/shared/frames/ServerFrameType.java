@@ -3,6 +3,7 @@ package com.put.battleship.shared.frames;
 public enum ServerFrameType {
     INVALID_FRAME,
     SERVERS,
+    CONNECTED,
     GAME_CREATED,
     GAME_NOT_FOUND,
     GAME_IS_FULL,

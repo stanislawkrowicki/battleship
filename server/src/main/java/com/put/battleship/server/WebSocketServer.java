@@ -36,10 +36,13 @@ public class WebSocketServer {
                             // Add HTTP codec and WebSocket handlers
                             pipeline.addLast(new HttpServerCodec());
                             pipeline.addLast(new HttpObjectAggregator(65536));
+
                             pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
 
                             // Custom handler to send JSON
                             pipeline.addLast(new WebSocketFrameHandler());
+
+
                         }
                     });
 

@@ -1,6 +1,5 @@
 package com.put.battleship.server.handlers;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.put.battleship.server.Player;
 import com.put.battleship.server.PlayerManager;
@@ -11,6 +10,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+
 
 public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -41,10 +42,14 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
     }
 
     @Override
-    public void handlerAdded(ChannelHandlerContext ctx) {
-        System.out.println("Client connected");
-        Player createdPlayer = PlayerManager.createPlayer();
-        ConnectionHandler.mapPlayerToChannel(createdPlayer.getId(), ctx);
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        if (evt instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
+            System.out.println("Client connected: " + ctx.channel().remoteAddress());
+            Player createdPlayer = PlayerManager.createPlayer();
+            ConnectionHandler.mapPlayerToChannel(createdPlayer.getId(), ctx);
+            sendFrameToCtx(ctx, new ServerFrame(ServerFrameType.CONNECTED, null));
+        }
+        super.userEventTriggered(ctx, evt);
     }
 
     @Override
@@ -55,14 +60,15 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
 
     public static void throwInvalidFrame(ChannelHandlerContext ctx) throws Exception {
         ServerFrame invalidFrame = new ServerFrame(ServerFrameType.INVALID_FRAME, "");
-        String jsonString = objectMapper.writeValueAsString(invalidFrame);
-        ctx.writeAndFlush(new TextWebSocketFrame(jsonString));
+        sendFrameToCtx(ctx, invalidFrame);
     }
 
     public static void sendFrameToCtx(ChannelHandlerContext ctx, ServerFrame frame) {
         try {
             String json = objectMapper.writeValueAsString(frame);
-            ctx.writeAndFlush(new TextWebSocketFrame(json));
+            var res = ctx.writeAndFlush(new TextWebSocketFrame(json));
+            if (!res.isSuccess())
+                System.out.println("Failed to send frame: " + res.cause().getMessage());
         } catch (JsonProcessingException e) {
             System.out.println("Tried to send invalid frame: " + e.getMessage());
             e.printStackTrace();
