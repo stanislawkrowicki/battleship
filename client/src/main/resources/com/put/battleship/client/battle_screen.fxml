@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.battleship.client.BattleController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="959.0" prefWidth="1760.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.battleship.client.BattleController">
    <children>
       <VBox fx:id="vBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="100.0" style="-fx-background-color: #ADD8E6;">
          <children>
-            <HBox fx:id="hBoxVirtual" alignment="CENTER" prefHeight="233.0" prefWidth="600.0" spacing="200"/>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="500.0">
+               <children>
+                  <Label text="Your Board:">
+                     <font>
+                        <Font size="42.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="98.0" prefWidth="262.0" text="Enemy Board:">
+                     <font>
+                        <Font size="42.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fx:id="hBoxVirtual" alignment="CENTER" prefHeight="233.0" prefWidth="600.0" spacing="200" />
             <Button mnemonicParsing="false" onAction="#switchToEndScreen" text="next scene" />
          </children></VBox>
    </children>
