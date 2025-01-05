@@ -6,6 +6,7 @@ import com.put.battleship.server.PlayerManager;
 import com.put.battleship.shared.frames.ClientFrame;
 import com.put.battleship.shared.frames.ServerFrameType;
 import com.put.battleship.shared.frames.ServerFrame;
+import com.put.battleship.shared.payloads.server.ConnectedPayload;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -47,7 +48,7 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
             System.out.println("Client connected: " + ctx.channel().remoteAddress());
             Player createdPlayer = PlayerManager.createPlayer();
             ConnectionHandler.mapPlayerToChannel(createdPlayer.getId(), ctx);
-            sendFrameToCtx(ctx, new ServerFrame(ServerFrameType.CONNECTED, null));
+            sendFrameToCtx(ctx, new ServerFrame(ServerFrameType.CONNECTED, new ConnectedPayload(createdPlayer.getId().toString())));
         }
         super.userEventTriggered(ctx, evt);
     }
