@@ -21,6 +21,7 @@ public class BattleShipsApp extends Application {
 
         try {
             new WebSocketClient(host, port).run();
+            System.out.println("Connected to the server!");
         } catch (InterruptedException e) {
             System.out.println("Failed to connect to the server!!!");
             e.printStackTrace();

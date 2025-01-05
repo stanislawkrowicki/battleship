@@ -7,6 +7,7 @@ module com.put.battleship.client {
     requires com.put.battleship.shared;
     requires com.fasterxml.jackson.databind;
     requires io.github.cdimascio.dotenv.java;
+    requires io.netty.common;
 
 
     opens com.put.battleship.client to javafx.fxml;

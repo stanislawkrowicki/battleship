@@ -49,9 +49,14 @@ public class WebSocketClient {
 
             ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
             System.out.printf("WebSocketClient connected to ws://%s:%d/ws\n", host, port);
-            channelFuture.channel().closeFuture().sync();
-        } finally {
-            workerGroup.shutdownGracefully();
+
+            channelFuture.channel().closeFuture().addListener(_ -> {
+                System.out.println("WebSocketClient disconnected");
+                workerGroup.shutdownGracefully();
+            });
+        } catch (Exception e) {
+            System.out.println(String.format("Failed to connect to the server ws://%s:%d/ws", host, port));
+            e.printStackTrace();
         }
     }
 }
