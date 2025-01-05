@@ -18,11 +18,4 @@ public class PlayerManager {
     public static Player getPlayer(UUID id) {
         return playerMap.get(id);
     }
-
-    public static Player getPlayerFromContext(ChannelHandlerContext ctx) {
-        var ch = ctx.channel();
-        var attr = ch.attr(Player.PLAYER_UUID_KEY);
-        // TODO: fail check if player is not found
-        return playerMap.get(UUID.fromString(ctx.channel().attr(Player.PLAYER_UUID_KEY).get()));
-    }
 }

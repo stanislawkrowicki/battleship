@@ -6,6 +6,7 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ContextManager {
@@ -38,5 +39,12 @@ public class ContextManager {
                 return channelContextMap.get(channel);
 
         return null;
+    }
+
+    public static Player getPlayerFromContext(ChannelHandlerContext ctx) {
+        var ch = ctx.channel();
+        var attr = ch.attr(Player.PLAYER_UUID_KEY);
+        // TODO: fail check if player is not found
+        return PlayerManager.getPlayer(UUID.fromString(ctx.channel().attr(Player.PLAYER_UUID_KEY).get()));
     }
 }
