@@ -11,7 +11,7 @@ import javafx.scene.Parent;
 import java.io.IOException;
 
 public class BattleShipsApp extends Application {
-    public static iBattleships model = new BattleShips();
+    public static BattleShips model = new BattleShips();
 
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.configure().directory("../").load();
