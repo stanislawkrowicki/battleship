@@ -1,26 +1,23 @@
 package com.put.battleship.client;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Arrays;
 
-public class BattleShips implements iBattleships {
+public class BattleShips {
 
 
     private final Board yourBoard;
     private final Board enemyBoard;
+    public Color yourColor = Color.rgb(255, 255, 200);
+    public Color enemyColor = Color.rgb(50, 168, 82);
     private boolean canAttack = true;
 
+
     public BattleShips() {
-        yourBoard = new Board(Color.rgb(255, 255, 200));
-        enemyBoard = new Board(Color.rgb(50, 168, 82));
+        yourBoard = new Board();
+        enemyBoard = new Board();
     }
 
     public int getSizex() {
@@ -40,24 +37,13 @@ public class BattleShips implements iBattleships {
     }
 
     public Color getEnemyBackgroundColor() {
-        return enemyBoard.backgroundColor;
+        return enemyColor;
     }
 
     public Color getYourBackgroundColor() {
-        return yourBoard.backgroundColor;
+        return yourColor;
     }
 
-    public Board getYourBoard() {
-        return yourBoard;
-    }
-
-    public Board getEnemyBoard() {
-        return enemyBoard;
-    }
-
-    public double color(int row, int col) {
-        return Math.random();
-    }
 
     public boolean handleAttack(Integer rowIndex, Integer columnIndex) throws AttackNotPermitted {
         if (!canAttack)
@@ -67,6 +53,12 @@ public class BattleShips implements iBattleships {
         if (!hit)
             canAttack = true;
         return hit;
+    }
+
+    public void setYourShips(Ship[] ships) {
+        yourBoard.setShips(ships);
+        enemyBoard.setShips(ships);
+        //send to server
     }
 
     public boolean getCanAttack() {
@@ -83,19 +75,6 @@ public class BattleShips implements iBattleships {
 
     public int yourShipCount() {
         return yourBoard.shipCount();
-    }
-
-    public Ship removeLastShip() {
-        return yourBoard.removeLastShip();
-    }
-
-    public boolean isValidPosition(Ship ship) {
-        return yourBoard.isValidPosition(ship);
-    }
-
-    public void addShip(Ship ship) {
-        yourBoard.addShip(ship);
-        enemyBoard.addShip(ship);
     }
 
     public boolean youWin() {

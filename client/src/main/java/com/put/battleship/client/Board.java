@@ -4,19 +4,18 @@ import javafx.scene.paint.Color;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Board {
-    private final int[][] boardMatrix;
-    private final List<Ship> ships;
-    private final int sizey = 10;
-    private final int sizex = 10;
-    public Color backgroundColor;
+    protected final int sizey = 10;
+    protected final int sizex = 10;
+    protected int[][] boardMatrix;
+    protected List<Ship> ships;
 
-    public Board(Color color) {
+    public Board() {
         boardMatrix = new int[sizey][sizex];
         ships = new ArrayList<Ship>();
-        backgroundColor = color;
     }
 
     public int getSizex() {
@@ -32,17 +31,6 @@ public class Board {
     }
 
 
-    public void addShip(Ship ship) {
-        ships.add(ship);
-        fillShip(ship, boardMatrix, ships.size());
-    }
-
-    public Ship removeLastShip() {
-        Ship ship = ships.removeLast();
-        fillShip(ship, boardMatrix, 0);
-        return ship;
-    }
-
     public boolean cellNotYetShot(int row, int col) {
         return boardMatrix[row][col] >= 0;
     }
@@ -51,43 +39,6 @@ public class Board {
         return boardMatrix[y][x] > 0;
     }
 
-    public boolean isValidPosition(Ship ship) {
-        int x = ship.getHeadX();
-        int y = ship.getHeadY();
-        for (int i = 0; i < ship.getSize(); i++) {
-            if (!isValidPosition(x, y))
-                return false;
-            if (ship.isVertical())
-                y++;
-            else x++;
-        }
-        return true;
-    }
-
-    public boolean isValidPosition(int x, int y) {
-        if (x >= sizex || y >= sizey || x < 0 || y < 0)
-            return false;
-        if (boardMatrix[y][x] > 0)
-            return false;
-        if (y > 0 && boardMatrix[y - 1][x] > 0)
-            return false;
-        if (y < sizey - 1 && boardMatrix[y + 1][x] > 0)
-            return false;
-        if (x > 0 && boardMatrix[y][x - 1] > 0)
-            return false;
-        return x >= sizex - 1 || boardMatrix[y][x + 1] <= 0;
-    }
-
-    private void fillShip(Ship ship, int[][] matrix, int indexOfShip) {
-        int x = ship.getHeadX();
-        int y = ship.getHeadY();
-        for (int i = 0; i < ship.getSize(); i++) {
-            matrix[y][x] = indexOfShip;
-            if (ship.isVertical())
-                y++;
-            else x++;
-        }
-    }
 
 //    public void example1() {
 //        Ship ship1 = new Ship(4, 0, 0, true);
@@ -118,5 +69,28 @@ public class Board {
             boardMatrix[row][col] = -boardMatrix[row][col];
         }
         return hit;
+    }
+
+    public Ship[] getShips() {
+        return ships.toArray(new Ship[shipCount()]);
+    }
+
+    public void setShips(Ship[] shipArray) {
+        ships = Arrays.stream(shipArray).toList();
+        for (Ship s : ships) {
+            fillShip(s, boardMatrix, ships.size());
+        }
+
+    }
+
+    protected void fillShip(Ship ship, int[][] matrix, int indexOfShip) {
+        int x = ship.getHeadX();
+        int y = ship.getHeadY();
+        for (int i = 0; i < ship.getSize(); i++) {
+            matrix[y][x] = indexOfShip;
+            if (ship.isVertical())
+                y++;
+            else x++;
+        }
     }
 }
