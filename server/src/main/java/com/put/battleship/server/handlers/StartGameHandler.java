@@ -15,7 +15,7 @@ public class StartGameHandler extends ClientFrameHandler {
 
     @Override
     public void handle() {
-        Player player = PlayerManager.getPlayerFromContext(ctx);
+        Player player = ContextManager.getPlayerFromContext(ctx);
         Game game = GameManager.getGameByHost(player);
 
         if (game == null) {
