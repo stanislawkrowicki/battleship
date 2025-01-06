@@ -1,10 +1,4 @@
-package com.put.battleship.client;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+package com.put.battleship.shared;
 
 public class Ship {
     private final int size;

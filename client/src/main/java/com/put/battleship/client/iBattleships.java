@@ -1,7 +1,7 @@
 package com.put.battleship.client;
 
+import com.put.battleship.shared.Ship;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public interface iBattleships {
     int[] shipsConfig();

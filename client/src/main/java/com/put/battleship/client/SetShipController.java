@@ -1,5 +1,6 @@
 package com.put.battleship.client;
 
+import com.put.battleship.shared.Ship;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

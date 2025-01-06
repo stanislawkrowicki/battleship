@@ -1,15 +1,7 @@
 package com.put.battleship.client;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
+import com.put.battleship.shared.Ship;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class BattleShips implements iBattleships {
 

@@ -1,5 +1,6 @@
 package com.put.battleship.client;
 
+import com.put.battleship.shared.Ship;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
