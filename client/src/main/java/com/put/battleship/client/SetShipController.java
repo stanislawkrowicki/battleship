@@ -47,9 +47,9 @@ public class SetShipController extends GridController {
                     paintCurrentShip(rectangle);
                 });
                 rectangle.setOnMouseClicked(event -> {
-                    if (event.getClickCount() == 2) {
-                        updateGrid();
-                    }
+//                    if (event.getClickCount() == 2) {
+//                        updateGrid();
+//                    }
                     if (event.isAltDown()) {
                         if (boardBuilder.shipCount() > 0) {
                             clearCurrentShip(rectangle);
@@ -78,14 +78,14 @@ public class SetShipController extends GridController {
         return gridPane;
     }
 
-    private void updateGrid() {
-        for (Node rec : yourBoard.getChildren()) {
-            Rectangle r = (Rectangle) rec;
-            int x = GridPane.getColumnIndex(r);
-            int y = GridPane.getRowIndex(r);
-            r.setFill(BattleShipsApp.model.isShipInYourBoard(y, x) ? Color.ORANGE : color(Math.random()));
-        }
-    }
+//    private void updateGrid() {
+//        for (Node rec : yourBoard.getChildren()) {
+//            Rectangle r = (Rectangle) rec;
+//            int x = GridPane.getColumnIndex(r);
+//            int y = GridPane.getRowIndex(r);
+//            r.setFill(BattleShipsApp.model.isShipInYourBoard(y, x) ? Color.ORANGE : BattleShipsApp.model.getYourBackgroundColor());
+//        }
+//    }
 
     private void paintCurrentShip(Rectangle rectangle) {
         Ship ship = currentShip(rectangle);
