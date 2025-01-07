@@ -15,8 +15,8 @@ public class Game {
 
     private final int BOARD_SIZE = 10;
 
-    private ArrayList<Ship> hostShips = new ArrayList<>();
-    private ArrayList<Ship> guestShips = new ArrayList<>();
+    private Ship[] hostShips = new Ship[10];
+    private Ship[] guestShips = new Ship[10];
 
     private int[][] hostBoard = new int[BOARD_SIZE][BOARD_SIZE];
     private int[][] guestBoard = new int[BOARD_SIZE][BOARD_SIZE];
@@ -88,11 +88,11 @@ public class Game {
         }
     }
 
-    public void setShipsForPlayer(Player player, ArrayList<Ship> ships) throws IllegalArgumentException {
+    public void setShipsForPlayer(Player player, Ship[] ships) throws IllegalArgumentException {
         int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
 
-        for (int i = 0; i < ships.size(); i++) {
-            fillShip(ships.get(i), board, i + 1);
+        for (int i = 0; i < ships.length; i++) {
+            fillShip(ships[i], board, i + 1);
         }
 
         if (player == host) {
@@ -108,15 +108,15 @@ public class Game {
 
     public boolean isPlayerReady(Player player) throws IllegalArgumentException {
         if (player == host)
-            return hostShips.size() == 10;
+            return hostShips.length == 10;
         else if (player == guest)
-            return guestShips.size() == 10;
+            return guestShips.length == 10;
         else
             throw new IllegalArgumentException("Player is not in this game");
     }
 
     public boolean areBothPlayersReady() {
-        return hostShips.size() == 10 && guestShips.size() == 10;
+        return hostShips.length == 10 && guestShips.length == 10;
     }
 
     public boolean isPlayerTurn(Player player) {

@@ -4,5 +4,5 @@ import com.put.battleship.shared.Ship;
 
 import java.util.ArrayList;
 
-public record SetShipsPayload(ArrayList<Ship> ships) {
+public record SetShipsPayload(Ship[] ships) {
 }

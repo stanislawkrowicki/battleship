@@ -1,16 +1,24 @@
 package com.put.battleship.shared;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Ship {
     private final int size;
-    private boolean verticality = false;
+    private boolean vertical = false;
     private int headX, headY;
 
 
-    public Ship(int ship_length, int x, int y, boolean vert) {
-        size = ship_length;
+    @JsonCreator
+    public Ship(
+            @JsonProperty("size") int shipLength,
+            @JsonProperty("headX") int x,
+            @JsonProperty("headY") int y,
+            @JsonProperty("vertical") boolean vertical) {
+        size = shipLength;
         headX = x;
         headY = y;
-        verticality = vert;
+        this.vertical = vertical;
     }
 
     public void setHeadLocation(int x, int y) {
@@ -30,7 +38,8 @@ public class Ship {
         return headY;
     }
 
+    @JsonProperty("vertical")
     public boolean isVertical() {
-        return verticality;
+        return vertical;
     }
 }

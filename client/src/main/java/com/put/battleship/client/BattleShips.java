@@ -1,5 +1,6 @@
 package com.put.battleship.client;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.put.battleship.shared.Ship;
 import javafx.scene.paint.Color;
 
@@ -54,6 +55,14 @@ public class BattleShips {
         yourBoard.setShips(ships);
         enemyBoard.setShips(ships);
         //send to server
+        System.out.println("Ships set");
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String json = objectMapper.writeValueAsString(ships);
+            System.out.println(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean getCanAttack() {
