@@ -11,6 +11,9 @@ public enum ServerFrameType {
     PLAYER_IS_NOT_HOST,
     GAME_JOINED,
     GAME_STARTED,
+    GAME_SHIPS_SET,
     GAME_SYNC,
-    GAME_OVER
+    GAME_OVER,
+    SHIPS_OK,
+    SHIPS_NOT_OK
 }

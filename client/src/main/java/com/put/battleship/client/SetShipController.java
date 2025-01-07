@@ -1,5 +1,6 @@
 package com.put.battleship.client;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.put.battleship.shared.Ship;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,6 +60,15 @@ public class SetShipController extends GridController {
                             paintCurrentShip(rectangle);
                         }
                     } else {
+                        if (BattleShipsApp.model.yourShipCount() == shipSizes.length - 1) {
+                            ObjectMapper objectMapper = new ObjectMapper();
+                            try {
+                                objectMapper.writeValue(System.out, BattleShipsApp.model.getYourBoard().getShips());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            return;
+                        }
                         if (BattleShipsApp.model.yourShipCount() == shipSizes.length)
                             return;
                         if (event.isSecondaryButtonDown() || event.getButton().name().equals("SECONDARY")) {

@@ -31,7 +31,10 @@ public class Board {
         return ships.size();
     }
 
-
+    public List<Ship> getShips() {
+        return ships;
+    }
+    
     public void addShip(Ship ship) {
         ships.add(ship);
         fillShip(ship, boardMatrix, ships.size());

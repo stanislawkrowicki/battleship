@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.put.battleship.shared.payloads.client.CreateGamePayload;
 import com.put.battleship.shared.payloads.client.EmptyPayload;
 import com.put.battleship.shared.payloads.client.JoinGamePayload;
+import com.put.battleship.shared.payloads.client.SetShipsPayload;
 
 import java.io.IOException;
 
@@ -34,6 +35,7 @@ public class ClientFrameDeserializer extends JsonDeserializer<Object> {
             case CREATE_GAME -> mapper.treeToValue(payloadNode, CreateGamePayload.class);
             case JOIN_GAME -> mapper.treeToValue(payloadNode, JoinGamePayload.class);
             case START_GAME -> mapper.treeToValue(payloadNode, EmptyPayload.class);
+            case SET_SHIPS -> mapper.treeToValue(payloadNode, SetShipsPayload.class);
             default -> throw new IllegalArgumentException("Unknown client frame type to deserialize: " + type);
         };
 

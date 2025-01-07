@@ -1,4 +1,8 @@
 package com.put.battleship.shared.payloads.client;
 
-public record SetShipsPayload() {
+import com.put.battleship.shared.Ship;
+
+import java.util.ArrayList;
+
+public record SetShipsPayload(ArrayList<Ship> ships) {
 }

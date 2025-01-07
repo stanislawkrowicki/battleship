@@ -30,6 +30,10 @@ public interface iBattleships {
 
     Color getEnemyBackgroundColor();
 
+    Board getYourBoard();
+
+    Board getEnemyBoard();
+
     boolean enemyCellNotYetShot(int row, int col);
 
     boolean yourCellNotYetShot(int row, int col);
