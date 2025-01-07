@@ -1,6 +1,5 @@
 package com.put.battleship.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.put.battleship.shared.Ship;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,10 +19,9 @@ public class SetShipController extends GridController {
     private final boolean canSetShips = false;
     SceneController sceneController = new SceneController();
     GridPane yourBoard;
+    BoardBuilder boardBuilder = new BoardBuilder();
     int[] shipSizes;
-    int currentShip;
     boolean vertical;
-    Color baseColor = Color.YELLOW;
     @FXML
     private HBox hBoxVirtual;
 
@@ -53,23 +51,14 @@ public class SetShipController extends GridController {
                         updateGrid();
                     }
                     if (event.isAltDown()) {
-                        if (BattleShipsApp.model.yourShipCount() > 0) {
+                        if (boardBuilder.shipCount() > 0) {
                             clearCurrentShip(rectangle);
-                            Ship removed = BattleShipsApp.model.removeLastShip();
+                            Ship removed = boardBuilder.removeLastShip();
                             clearShip(removed);
                             paintCurrentShip(rectangle);
                         }
                     } else {
-                        if (BattleShipsApp.model.yourShipCount() == shipSizes.length - 1) {
-                            ObjectMapper objectMapper = new ObjectMapper();
-                            try {
-                                objectMapper.writeValue(System.out, BattleShipsApp.model.getYourBoard().getShips());
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                            return;
-                        }
-                        if (BattleShipsApp.model.yourShipCount() == shipSizes.length)
+                        if (boardBuilder.shipCount() == shipSizes.length)
                             return;
                         if (event.isSecondaryButtonDown() || event.getButton().name().equals("SECONDARY")) {
                             clearCurrentShip(rectangle);
@@ -77,8 +66,8 @@ public class SetShipController extends GridController {
                             paintCurrentShip(rectangle);
                         } else {
                             Ship ship = currentShip(rectangle);
-                            if (ship != null && BattleShipsApp.model.isValidPosition(ship))
-                                BattleShipsApp.model.addShip(ship);
+                            if (ship != null && boardBuilder.isValidPosition(ship))
+                                boardBuilder.addShip(ship);
                         }
                     }
                 });
@@ -100,22 +89,22 @@ public class SetShipController extends GridController {
 
     private void paintCurrentShip(Rectangle rectangle) {
         Ship ship = currentShip(rectangle);
-        if (ship != null && BattleShipsApp.model.isValidPosition(ship))
+        if (ship != null && boardBuilder.isValidPosition(ship))
             paintShip(ship);
     }
 
     private void clearCurrentShip(Rectangle rectangle) {
         Ship ship = currentShip(rectangle);
-        if (ship != null && BattleShipsApp.model.isValidPosition(ship))
+        if (ship != null && boardBuilder.isValidPosition(ship))
             clearShip(ship);
     }
 
     private Ship currentShip(Rectangle rectangle) {
-        if (BattleShipsApp.model.yourShipCount() == shipSizes.length)
+        if (boardBuilder.shipCount() == shipSizes.length)
             return null;
         int row = GridPane.getRowIndex(rectangle);
         int col = GridPane.getColumnIndex(rectangle);
-        return new Ship(shipSizes[BattleShipsApp.model.yourShipCount()],
+        return new Ship(shipSizes[boardBuilder.shipCount()],
                 col, row, vertical);
     }
 
@@ -140,12 +129,13 @@ public class SetShipController extends GridController {
     }
 
     private Color color(double brightness) {
-        return Color.rgb(255, 255, 200);
+        return BattleShipsApp.model.getYourBackgroundColor();
         //return baseColor.darker().interpolate(baseColor.brighter(), brightness);
     }
 
 
     public void switchToBattleScreen(ActionEvent event) throws IOException {
+        BattleShipsApp.model.setYourShips(boardBuilder.getShips());
         sceneController.switchScene(event, "battle_screen.fxml");
 
     }
