@@ -1,9 +1,6 @@
 package com.put.battleship.server.handlers;
 
-import com.put.battleship.server.Game;
-import com.put.battleship.server.GameManager;
-import com.put.battleship.server.Player;
-import com.put.battleship.server.PlayerManager;
+import com.put.battleship.server.*;
 import com.put.battleship.shared.frames.ClientFrame;
 import com.put.battleship.shared.frames.ServerFrameType;
 import com.put.battleship.shared.frames.ServerFrame;
@@ -18,7 +15,7 @@ public class CreateGameHandler extends ClientFrameHandler {
 
     @Override
     public void handle() {
-        Player player = PlayerManager.getPlayerFromContext(this.ctx);
+        Player player = ContextManager.getPlayerFromContext(this.ctx);
         Game game = GameManager.createGame(player);
 
         System.out.println("Game created: " + game.getId() +

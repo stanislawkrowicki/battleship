@@ -15,7 +15,7 @@ public class StartGameHandler extends ClientFrameHandler {
 
     @Override
     public void handle() {
-        Player player = PlayerManager.getPlayerFromContext(ctx);
+        Player player = ContextManager.getPlayerFromContext(ctx);
         Game game = GameManager.getGameByHost(player);
 
         if (game == null) {
@@ -30,7 +30,7 @@ public class StartGameHandler extends ClientFrameHandler {
 
         game.start();
 
-        ChannelHandlerContext opponentCtx = ContextManager.findContextMappedToPlayer(game.getGuest());
+        ChannelHandlerContext opponentCtx = ContextManager.getContextFromPlayer(game.getGuest());
         assert opponentCtx != null;
 
         this.sendFrame(new ServerFrame(ServerFrameType.GAME_STARTED, null));

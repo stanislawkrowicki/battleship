@@ -30,6 +30,10 @@ public class GameManager {
         return games.stream().filter(game -> game.getHost().equals(host)).findFirst().orElse(null);
     }
 
+    public static Game getGameByPlayer(Player player) {
+        return games.stream().filter(game -> game.getHost().equals(player) || game.getGuest().equals(player)).findFirst().orElse(null);
+    }
+
     public static ArrayList<Game> getGames() {
         return games;
     }
@@ -53,7 +57,7 @@ public class GameManager {
 
     public static void connectPlayerToRoomByJoinCode(Player player, String joinCode) throws GameDoesNotExistException, GameIsFullException {
         Game game = getGameByJoinCode(joinCode);
-        
+
         if (game == null) {
             throw new GameDoesNotExistException("Game does not exist.");
         }

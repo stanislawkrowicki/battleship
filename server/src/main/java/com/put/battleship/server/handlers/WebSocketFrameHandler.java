@@ -68,11 +68,14 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSo
         try {
             String json = objectMapper.writeValueAsString(frame);
             var res = ctx.writeAndFlush(new TextWebSocketFrame(json));
+            res.await(1000);
             if (!res.isSuccess())
                 System.out.println("Failed to send frame: " + res.cause().getMessage());
         } catch (JsonProcessingException e) {
             System.out.println("Tried to send invalid frame: " + e.getMessage());
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 

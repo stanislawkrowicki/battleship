@@ -1,8 +1,8 @@
 package com.put.battleship.server.handlers;
 
+import com.put.battleship.server.ContextManager;
 import com.put.battleship.server.GameManager;
 import com.put.battleship.server.Player;
-import com.put.battleship.server.PlayerManager;
 import com.put.battleship.server.exceptions.GameDoesNotExistException;
 import com.put.battleship.server.exceptions.GameIsFullException;
 import com.put.battleship.shared.frames.ClientFrame;
@@ -20,7 +20,7 @@ public class JoinGameHandler extends ClientFrameHandler {
     @Override
     public void handle() {
         JoinGamePayload payload = (JoinGamePayload) this.frame.payload;
-        Player player = PlayerManager.getPlayerFromContext(this.ctx);
+        Player player = ContextManager.getPlayerFromContext(this.ctx);
 
         try {
             GameManager.connectPlayerToRoomByJoinCode(player, payload.joinCode());

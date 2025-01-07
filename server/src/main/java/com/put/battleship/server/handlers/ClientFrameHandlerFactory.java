@@ -11,6 +11,7 @@ public class ClientFrameHandlerFactory {
             case START_GAME -> new StartGameHandler(frame, ctx);
             case SHOOT -> new ShootHandler(frame, ctx);
             case SYNC -> new SyncHandler(frame, ctx);
+            case SET_SHIPS -> new SetShipsHandler(frame, ctx);
             default -> throw new IllegalArgumentException("Unknown client frame type to factory: " + frame.type);
         };
     }

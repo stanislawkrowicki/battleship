@@ -31,7 +31,7 @@ public class ContextManager {
         return channelContextMap.get(channel);
     }
 
-    public static ChannelHandlerContext findContextMappedToPlayer(Player player) {
+    public static ChannelHandlerContext getContextFromPlayer(Player player) {
         String playerId = player.getId().toString();
 
         for (Channel channel : channels)

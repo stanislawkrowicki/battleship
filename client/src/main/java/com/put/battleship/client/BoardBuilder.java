@@ -1,5 +1,7 @@
 package com.put.battleship.client;
 
+import com.put.battleship.shared.Ship;
+
 public class BoardBuilder extends Board {
     public void addShip(Ship ship) {
         ships.add(ship);
