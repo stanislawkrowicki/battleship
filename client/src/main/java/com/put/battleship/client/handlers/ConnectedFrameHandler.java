@@ -1,8 +1,6 @@
 package com.put.battleship.client.handlers;
 
-import com.put.battleship.client.FrameSender;
-import com.put.battleship.shared.frames.ClientFrame;
-import com.put.battleship.shared.frames.ClientFrameType;
+import com.put.battleship.client.senders.FrameSenderManager;
 import com.put.battleship.shared.frames.ServerFrame;
 import com.put.battleship.shared.payloads.server.ConnectedPayload;
 import io.netty.channel.ChannelHandlerContext;
@@ -17,7 +15,6 @@ public class ConnectedFrameHandler extends ServerFrameHandler {
         System.out.println("Connected to the server");
         var payload = (ConnectedPayload) this.frame.payload;
         System.out.println("Your player id is: " + payload.uuid());
-        FrameSender.setContext(ctx);
-        FrameSender.sendFrame(new ClientFrame(ClientFrameType.CREATE_GAME, null));
+        FrameSenderManager.setContext(ctx);
     }
 }

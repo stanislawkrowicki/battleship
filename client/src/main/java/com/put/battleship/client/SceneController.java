@@ -1,5 +1,6 @@
 package com.put.battleship.client;
 
+import com.put.battleship.client.senders.CreateGameFrameSender;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,7 @@ public class SceneController {
     }
 
     public void switchToLoadingScreen(ActionEvent event) throws IOException {
+        new CreateGameFrameSender().send();
         switchScene(event, "loading_screen.fxml");
     }
 

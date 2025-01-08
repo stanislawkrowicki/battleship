@@ -9,6 +9,7 @@ public class ServerFrameHandlerFactory {
         return switch (frame.type) {
             case INVALID_FRAME -> new InvalidFrameHandler(frame, ctx);
             case CONNECTED -> new ConnectedFrameHandler(frame, ctx);
+            case GAME_CREATED -> new GameCreatedHandler(frame, ctx);
             default -> throw new IllegalArgumentException("Unknown client frame type to factory: " + frame.type);
         };
     }

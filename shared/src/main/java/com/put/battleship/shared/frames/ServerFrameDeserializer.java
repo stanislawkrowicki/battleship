@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.put.battleship.shared.payloads.client.EmptyPayload;
 import com.put.battleship.shared.payloads.server.ConnectedPayload;
+import com.put.battleship.shared.payloads.server.GameCreatedPayload;
 
 import java.io.IOException;
 
@@ -23,6 +24,7 @@ public class ServerFrameDeserializer extends JsonDeserializer<Object> {
 
         switch (type) {
             case CONNECTED -> frame.payload = mapper.treeToValue(payloadNode, ConnectedPayload.class);
+            case GAME_CREATED -> frame.payload = mapper.treeToValue(payloadNode, GameCreatedPayload.class);
             default -> throw new IllegalArgumentException("Unknown server frame type: " + type);
         }
 

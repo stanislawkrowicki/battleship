@@ -1,4 +1,4 @@
-package com.put.battleship.client;
+package com.put.battleship.client.senders;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,7 +7,7 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
-public class FrameSender {
+public class FrameSenderManager {
     static private ChannelHandlerContext ctx;
     static private final ObjectMapper objectMapper = new ObjectMapper();
 

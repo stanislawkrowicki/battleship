@@ -12,4 +12,6 @@ module com.put.battleship.client {
 
     opens com.put.battleship.client to javafx.fxml;
     exports com.put.battleship.client;
+    exports com.put.battleship.client.senders;
+    opens com.put.battleship.client.senders to javafx.fxml;
 }

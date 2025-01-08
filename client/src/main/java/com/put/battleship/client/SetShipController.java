@@ -58,8 +58,10 @@ public class SetShipController extends GridController {
                             paintCurrentShip(rectangle);
                         }
                     } else {
-                        if (boardBuilder.shipCount() == shipSizes.length)
+                        if (boardBuilder.shipCount() == shipSizes.length) {
+                            System.out.println("All ships set");
                             return;
+                        }
                         if (event.isSecondaryButtonDown() || event.getButton().name().equals("SECONDARY")) {
                             clearCurrentShip(rectangle);
                             vertical = !vertical;
