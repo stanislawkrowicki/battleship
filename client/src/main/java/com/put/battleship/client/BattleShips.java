@@ -10,11 +10,16 @@ public class BattleShips {
     private final Board enemyBoard;
     public Color yourColor = Color.rgb(255, 255, 200);
     public Color enemyColor = Color.rgb(50, 168, 82);
+    private String roomCode;
     private boolean canAttack = true;
 
     public BattleShips() {
         yourBoard = new Board();
         enemyBoard = new Board();
+    }
+
+    public void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
     }
 
     public int getSizex() {
