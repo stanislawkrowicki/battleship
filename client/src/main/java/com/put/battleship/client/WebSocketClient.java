@@ -48,7 +48,15 @@ public class WebSocketClient {
                     });
 
             ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
-            System.out.printf("WebSocketClient connected to ws://%s:%d/ws\n", host, port);
+            if (channelFuture.isSuccess())
+                System.out.printf("WebSocketClient connected to ws://%s:%d/ws\n", host, port);
+            else {
+                System.out.printf("Failed to connect to the server ws://%s:%d/ws%n", host, port);
+                if (channelFuture.cause() != null) {
+                    System.out.println(channelFuture.cause().getMessage());
+                }
+                return;
+            }
 
             channelFuture.channel().closeFuture().addListener(_ -> {
                 System.out.println("WebSocketClient disconnected");
