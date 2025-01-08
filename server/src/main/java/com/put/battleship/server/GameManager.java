@@ -12,8 +12,8 @@ public class GameManager {
         games.add(game);
     }
 
-    public static Game createGame(Player host) {
-        Game game = new Game(host);
+    public static Game createGame(Player host, String joinCode) {
+        Game game = new Game(host, joinCode);
         addGame(game);
         return game;
     }

@@ -1,4 +1,4 @@
 package com.put.battleship.shared.payloads.client;
 
-public record CreateGamePayload() {
+public record CreateGamePayload(String joinCode) {
 }

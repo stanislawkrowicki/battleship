@@ -20,12 +20,9 @@ public class SceneController {
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.getScene().setRoot(root);
         stage.show();
-
-
     }
 
     public void switchToLoadingScreen(ActionEvent event) throws IOException {
-        new CreateGameFrameSender().send();
         switchScene(event, "loading_screen.fxml");
     }
 
@@ -45,8 +42,6 @@ public class SceneController {
 
     public void switchToVictoryScreen(ActionEvent event) throws IOException {
         switchScene(event, "victory_screen.fxml");
-
     }
-
 
 }

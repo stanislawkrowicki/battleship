@@ -2,7 +2,7 @@ package com.put.battleship.server;
 
 import com.put.battleship.shared.Ship;
 
-import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -23,20 +23,11 @@ public class Game {
 
     private Player hasTurn = null;
 
-    public Game(Player host) {
+    public Game(Player host, String joinCode) {
         this.host = host;
         this.id = UUID.randomUUID();
 
-        int leftLimit = 48; // numeral '0'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 6;
-        Random random = new Random();
-
-        this.joinCode = random.ints(leftLimit, rightLimit + 1)
-                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
+        this.joinCode = Objects.requireNonNullElseGet(joinCode, this::generateJoinCode);
     }
 
     public UUID getId() {
@@ -75,6 +66,19 @@ public class Game {
 
     public void start() {
         isStarted = true;
+    }
+
+    private String generateJoinCode() {
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 6;
+        Random random = new Random();
+
+        return random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 
     private void fillShip(Ship ship, int[][] matrix, int indexOfShip) {
@@ -118,7 +122,7 @@ public class Game {
     public boolean areBothPlayersReady() {
         if (host == null || guest == null)
             return false;
-        
+
         return hostShips.length == 10 && guestShips.length == 10;
     }
 

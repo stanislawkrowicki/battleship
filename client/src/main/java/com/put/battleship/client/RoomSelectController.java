@@ -1,5 +1,6 @@
 package com.put.battleship.client;
 
+import com.put.battleship.client.senders.CreateGameFrameSender;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,7 +9,6 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 public class RoomSelectController {
-
     SceneController sceneController = new SceneController();
     String roomCode;
 
@@ -26,7 +26,7 @@ public class RoomSelectController {
         roomCode = roomCodeField.getText();
         if (isCorrectFormat(roomCode)) {
             BattleShipsApp.model.setRoomCode(roomCode);
-            sceneController.switchScene(event, "loading_screen.fxml");
+            new CreateGameFrameSender(roomCode).send();
         } else {
             errorLabel.setText("Enter correct code format :)");
 
@@ -43,4 +43,8 @@ public class RoomSelectController {
 
         }
     }
+
+//    public void onRoomCreated() {
+//        SceneController.switchToLoadingScreen(null);
+//    }
 }
