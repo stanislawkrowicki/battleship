@@ -116,6 +116,9 @@ public class Game {
     }
 
     public boolean areBothPlayersReady() {
+        if (host == null || guest == null)
+            return false;
+        
         return hostShips.length == 10 && guestShips.length == 10;
     }
 

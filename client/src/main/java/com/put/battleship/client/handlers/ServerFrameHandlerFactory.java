@@ -10,6 +10,9 @@ public class ServerFrameHandlerFactory {
             case INVALID_FRAME -> new InvalidFrameHandler(frame, ctx);
             case CONNECTED -> new ConnectedFrameHandler(frame, ctx);
             case GAME_CREATED -> new GameCreatedHandler(frame, ctx);
+            case SHIPS_OK -> new ShipsOkHandler(frame, ctx);
+            case SHIPS_NOT_OK -> new ShipsNotOkHandler(frame, ctx);
+            case GAME_SHIPS_SET -> new GameShipsSetHandler(frame, ctx);
             default -> throw new IllegalArgumentException("Unknown client frame type to factory: " + frame.type);
         };
     }

@@ -59,6 +59,7 @@ public class WebSocketClient {
             }
 
             channelFuture.channel().closeFuture().addListener(_ -> {
+                // TODO: Reconnect
                 System.out.println("WebSocketClient disconnected");
                 workerGroup.shutdownGracefully();
             });
