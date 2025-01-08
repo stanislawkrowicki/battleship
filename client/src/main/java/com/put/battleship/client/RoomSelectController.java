@@ -43,8 +43,5 @@ public class RoomSelectController {
 
         }
     }
-
-//    public void onRoomCreated() {
-//        SceneController.switchToLoadingScreen(null);
-//    }
+    
 }
