@@ -19,16 +19,5 @@ public abstract class ServerFrameHandler {
         this.ctx = ctx;
     }
 
-    void sendFrame(ClientFrame frame) {
-        try {
-            String json = objectMapper.writeValueAsString(frame);
-            ctx.writeAndFlush(new TextWebSocketFrame(json));
-        } catch (JsonProcessingException e) {
-            System.out.println("Tried to send invalid frame: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     public abstract void handle();
-
 }
