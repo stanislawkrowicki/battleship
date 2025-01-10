@@ -9,6 +9,7 @@ import com.put.battleship.shared.frames.ClientFrame;
 import com.put.battleship.shared.frames.ServerFrame;
 import com.put.battleship.shared.frames.ServerFrameType;
 import com.put.battleship.shared.payloads.client.JoinGamePayload;
+import com.put.battleship.shared.payloads.server.GameJoinedPayload;
 import io.netty.channel.ChannelHandlerContext;
 
 public class JoinGameHandler extends ClientFrameHandler {
@@ -24,7 +25,7 @@ public class JoinGameHandler extends ClientFrameHandler {
 
         try {
             GameManager.connectPlayerToRoomByJoinCode(player, payload.joinCode());
-            this.sendFrame(new ServerFrame(ServerFrameType.GAME_JOINED, payload.joinCode()));
+            this.sendFrame(new ServerFrame(ServerFrameType.GAME_JOINED, new GameJoinedPayload(payload.joinCode())));
         } catch (GameDoesNotExistException notExistException) {
             this.sendFrame(new ServerFrame(ServerFrameType.GAME_NOT_FOUND, payload.joinCode()));
         } catch (GameIsFullException isFullException) {
