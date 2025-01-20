@@ -37,6 +37,7 @@ public class SetShipsHandler extends ClientFrameHandler {
         }
 
         if (game.areBothPlayersReady()) {
+            game.start();
             Player opponent = game.getOpponent(player);
             ServerFrame gameStartedFrame = new ServerFrame(ServerFrameType.GAME_SHIPS_SET, null);
             ChannelHandlerContext enemyCtx = ContextManager.getContextFromPlayer(opponent);
@@ -48,6 +49,11 @@ public class SetShipsHandler extends ClientFrameHandler {
 
             sendFrame(gameStartedFrame);
             sendFrameToCtx(enemyCtx, gameStartedFrame);
+
+            ChannelHandlerContext startingPlayerCtx = ContextManager.getContextFromPlayer(game.getCurrentPlayer());
+            assert startingPlayerCtx != null;
+
+            sendFrameToCtx(startingPlayerCtx, new ServerFrame(ServerFrameType.YOUR_TURN, null));
         }
     }
 }

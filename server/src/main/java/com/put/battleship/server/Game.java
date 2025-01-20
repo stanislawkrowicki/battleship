@@ -18,6 +18,9 @@ public class Game {
     private Ship[] hostShips = new Ship[10];
     private Ship[] guestShips = new Ship[10];
 
+    private boolean hostShipsSet = false;
+    private boolean guestShipsSet = false;
+
     private int[][] hostBoard = new int[BOARD_SIZE][BOARD_SIZE];
     private int[][] guestBoard = new int[BOARD_SIZE][BOARD_SIZE];
 
@@ -66,6 +69,7 @@ public class Game {
 
     public void start() {
         isStarted = true;
+        currentPlayer = host;
     }
 
     private String generateJoinCode() {
@@ -102,9 +106,11 @@ public class Game {
         if (player == host) {
             hostShips = ships;
             hostBoard = board;
+            hostShipsSet = true;
         } else if (player == guest) {
             guestShips = ships;
             guestBoard = board;
+            guestShipsSet = true;
         } else {
             throw new IllegalArgumentException("Player is not in this game");
         }
@@ -112,9 +118,9 @@ public class Game {
 
     public boolean isPlayerReady(Player player) throws IllegalArgumentException {
         if (player == host)
-            return hostShips.length == 10;
+            return hostShipsSet;
         else if (player == guest)
-            return guestShips.length == 10;
+            return guestShipsSet;
         else
             throw new IllegalArgumentException("Player is not in this game");
     }
@@ -123,15 +129,19 @@ public class Game {
         if (host == null || guest == null)
             return false;
 
-        return hostShips.length == 10 && guestShips.length == 10;
+        return hostShipsSet && guestShipsSet;
     }
 
     public boolean isPlayerTurn(Player player) {
         return currentPlayer == player;
     }
 
-    public Player switchTurn() {
-        return currentPlayer = currentPlayer == host ? guest : host;
+    private void switchTurn() {
+        currentPlayer = currentPlayer == host ? guest : host;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public boolean handleShoot(Player player, int x, int y) throws IllegalArgumentException {
@@ -151,9 +161,11 @@ public class Game {
 
         if (board[y][x] > 0) {
             board[y][x] = -1;
+            switchTurn();
             return true;
         } else {
             board[y][x] = 0;
+            switchTurn();
             return false;
         }
     }

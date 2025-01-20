@@ -15,5 +15,9 @@ public enum ServerFrameType {
     GAME_SYNC,
     GAME_OVER,
     SHIPS_OK,
-    SHIPS_NOT_OK
+    SHIPS_NOT_OK,
+    SHOT_HIT,
+    SHOT_MISS,
+    ENEMY_SHOT,
+    YOUR_TURN
 }
