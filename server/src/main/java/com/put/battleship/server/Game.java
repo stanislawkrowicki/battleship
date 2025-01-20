@@ -21,7 +21,7 @@ public class Game {
     private int[][] hostBoard = new int[BOARD_SIZE][BOARD_SIZE];
     private int[][] guestBoard = new int[BOARD_SIZE][BOARD_SIZE];
 
-    private Player hasTurn = null;
+    private Player currentPlayer = null;
 
     public Game(Player host, String joinCode) {
         this.host = host;
@@ -127,11 +127,11 @@ public class Game {
     }
 
     public boolean isPlayerTurn(Player player) {
-        return hasTurn == player;
+        return currentPlayer == player;
     }
 
     public Player switchTurn() {
-        return hasTurn = hasTurn == host ? guest : host;
+        return currentPlayer = currentPlayer == host ? guest : host;
     }
 
     public boolean handleShoot(Player player, int x, int y) throws IllegalArgumentException {
@@ -143,6 +143,10 @@ public class Game {
             board = hostBoard;
         } else {
             throw new IllegalArgumentException("Player is not in this game");
+        }
+
+        if (player != currentPlayer) {
+            throw new IllegalArgumentException("It's not your turn");
         }
 
         if (board[y][x] > 0) {
