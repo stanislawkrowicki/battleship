@@ -1,6 +1,5 @@
 package com.put.battleship.client;
 
-import com.put.battleship.client.senders.CreateGameFrameSender;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;

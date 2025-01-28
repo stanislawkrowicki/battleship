@@ -1,7 +1,9 @@
 package com.put.battleship.client;
 
-import com.put.battleship.client.senders.SetShipsFrameSender;
 import com.put.battleship.shared.Ship;
+import com.put.battleship.shared.frames.ClientFrame;
+import com.put.battleship.shared.frames.ClientFrameType;
+import com.put.battleship.shared.payloads.client.SetShipsPayload;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,7 +63,8 @@ public class SetShipController extends GridController {
                     } else {
                         if (boardBuilder.shipCount() == shipSizes.length) {
                             System.out.println("Sending ships set...");
-                            new SetShipsFrameSender(boardBuilder.getShips()).send();
+                            FrameSender.sendFrame(new ClientFrame(ClientFrameType.SET_SHIPS,
+                                    new SetShipsPayload(boardBuilder.getShips())));
                             return;
                         }
                         if (event.isSecondaryButtonDown() || event.getButton().name().equals("SECONDARY")) {

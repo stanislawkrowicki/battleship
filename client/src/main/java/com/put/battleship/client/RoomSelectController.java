@@ -1,7 +1,9 @@
 package com.put.battleship.client;
 
-import com.put.battleship.client.senders.CreateGameFrameSender;
-import com.put.battleship.client.senders.JoinGameFrameSender;
+import com.put.battleship.shared.frames.ClientFrame;
+import com.put.battleship.shared.frames.ClientFrameType;
+import com.put.battleship.shared.payloads.client.CreateGamePayload;
+import com.put.battleship.shared.payloads.client.JoinGamePayload;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -27,7 +29,8 @@ public class RoomSelectController {
         roomCode = roomCodeField.getText();
         if (isCorrectFormat(roomCode)) {
             BattleShipsApp.model.setRoomCode(roomCode);
-            new CreateGameFrameSender(roomCode).send();
+            FrameSender.sendFrame(new ClientFrame(ClientFrameType.CREATE_GAME,
+                    new CreateGamePayload(roomCode)));
         } else {
             errorLabel.setText("Enter correct code format :)");
 
@@ -38,11 +41,10 @@ public class RoomSelectController {
         roomCode = roomCodeField.getText();
         if (isCorrectFormat(roomCode)) {
             BattleShipsApp.model.setRoomCode(roomCode);
-            new JoinGameFrameSender(roomCode).send();
-//            sceneController.switchScene(event, "loading_screen.fxml");
+            FrameSender.sendFrame(new ClientFrame(ClientFrameType.JOIN_GAME,
+                    new JoinGamePayload(roomCode)));
         } else {
             errorLabel.setText("Enter correct code format :)");
-
         }
     }
 
