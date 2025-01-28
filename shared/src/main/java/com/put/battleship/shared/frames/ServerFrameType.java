@@ -7,6 +7,7 @@ public enum ServerFrameType {
     GAME_CREATED,
     GAME_NOT_FOUND,
     GAME_IS_FULL,
+    GAME_ALREADY_EXISTS,
     WAITING_FOR_OPPONENT,
     PLAYER_IS_NOT_HOST,
     GAME_JOINED,

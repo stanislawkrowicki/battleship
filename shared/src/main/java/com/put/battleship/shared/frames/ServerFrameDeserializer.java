@@ -27,11 +27,10 @@ public class ServerFrameDeserializer extends JsonDeserializer<Object> {
         switch (type) {
             case CONNECTED -> frame.payload = mapper.treeToValue(payloadNode, ConnectedPayload.class);
             case GAME_CREATED -> frame.payload = mapper.treeToValue(payloadNode, GameCreatedPayload.class);
-            case INVALID_FRAME -> frame.payload = mapper.treeToValue(payloadNode, EmptyPayload.class);
-            case SHIPS_OK, SHIPS_NOT_OK, GAME_SHIPS_SET, YOUR_TURN ->
-                    mapper.treeToValue(payloadNode, EmptyPayload.class);
             case GAME_JOINED -> frame.payload = mapper.treeToValue(payloadNode, GameJoinedPayload.class);
             case ENEMY_SHOT -> frame.payload = mapper.treeToValue(payloadNode, EnemyShotPayload.class);
+            case INVALID_FRAME, SHIPS_OK, SHIPS_NOT_OK, GAME_SHIPS_SET, YOUR_TURN, GAME_ALREADY_EXISTS ->
+                    mapper.treeToValue(payloadNode, EmptyPayload.class);
             default -> throw new IllegalArgumentException("Unknown server frame type: " + type);
         }
 

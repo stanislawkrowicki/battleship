@@ -14,6 +14,7 @@ public class ServerFrameHandlerFactory {
             case SHIPS_NOT_OK -> new ShipsNotOkHandler(frame, ctx);
             case GAME_SHIPS_SET -> new GameShipsSetHandler(frame, ctx);
             case GAME_JOINED -> new GameJoinedHandler(frame, ctx);
+            case GAME_ALREADY_EXISTS -> new GameAlreadyExistsHandler(frame, ctx);
             default -> throw new IllegalArgumentException("Unknown client frame type to factory: " + frame.type);
         };
     }

@@ -1,5 +1,6 @@
 package com.put.battleship.server;
 
+import com.put.battleship.server.exceptions.GameAlreadyExistsException;
 import com.put.battleship.server.exceptions.GameDoesNotExistException;
 import com.put.battleship.server.exceptions.GameIsFullException;
 
@@ -12,7 +13,11 @@ public class GameManager {
         games.add(game);
     }
 
-    public static Game createGame(Player host, String joinCode) {
+    public static Game createGame(Player host, String joinCode) throws GameAlreadyExistsException {
+        if (getGameByJoinCode(joinCode) != null) {
+            throw new GameAlreadyExistsException("Game with this join code already exists.");
+        }
+        
         Game game = new Game(host, joinCode);
         addGame(game);
         return game;
