@@ -61,12 +61,7 @@ public class SetShipController extends GridController {
                             paintCurrentShip(rectangle);
                         }
                     } else {
-                        if (boardBuilder.shipCount() == shipSizes.length) {
-                            System.out.println("Sending ships set...");
-                            FrameSender.sendFrame(new ClientFrame(ClientFrameType.SET_SHIPS,
-                                    new SetShipsPayload(boardBuilder.getShips())));
-                            return;
-                        }
+
                         if (event.isSecondaryButtonDown() || event.getButton().name().equals("SECONDARY")) {
                             clearCurrentShip(rectangle);
                             vertical = !vertical;
@@ -142,8 +137,13 @@ public class SetShipController extends GridController {
 
 
     public void switchToBattleScreen(ActionEvent event) throws IOException {
-        BattleShipsApp.model.setYourShips(boardBuilder.getShips());
-        sceneController.switchScene(event, "battle_screen.fxml");
+        if (boardBuilder.shipCount() == shipSizes.length) {
+            BattleShipsApp.model.setYourShips(boardBuilder.getShips());
+            System.out.println("Sending ships set...");
+            FrameSender.sendFrame(new ClientFrame(ClientFrameType.SET_SHIPS,
+                    new SetShipsPayload(boardBuilder.getShips())));
+        }
+        //sceneController.switchScene(event, "battle_screen.fxml");
 
     }
 }

@@ -12,6 +12,6 @@ public class GameJoinedHandler extends ServerFrameHandler {
 
     @Override
     public void handle() {
-        SceneSwitcher.switchToLoadingScreen();
+        SceneSwitcher.switchToSetShipScreen();
     }
 }
