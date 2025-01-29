@@ -17,7 +17,7 @@ public class GameManager {
         if (getGameByJoinCode(joinCode) != null) {
             throw new GameAlreadyExistsException("Game with this join code already exists.");
         }
-        
+
         Game game = new Game(host, joinCode);
         addGame(game);
         return game;
@@ -60,7 +60,7 @@ public class GameManager {
         game.joinGuest(player);
     }
 
-    public static void connectPlayerToRoomByJoinCode(Player player, String joinCode) throws GameDoesNotExistException, GameIsFullException {
+    public static Game connectPlayerToRoomByJoinCode(Player player, String joinCode) throws GameDoesNotExistException, GameIsFullException {
         Game game = getGameByJoinCode(joinCode);
 
         if (game == null) {
@@ -71,5 +71,7 @@ public class GameManager {
         }
 
         game.joinGuest(player);
+
+        return game;
     }
 }
