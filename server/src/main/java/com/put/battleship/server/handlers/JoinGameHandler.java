@@ -1,6 +1,7 @@
 package com.put.battleship.server.handlers;
 
 import com.put.battleship.server.ContextManager;
+import com.put.battleship.server.Game;
 import com.put.battleship.server.GameManager;
 import com.put.battleship.server.Player;
 import com.put.battleship.server.exceptions.GameDoesNotExistException;
@@ -11,6 +12,8 @@ import com.put.battleship.shared.frames.ServerFrameType;
 import com.put.battleship.shared.payloads.client.JoinGamePayload;
 import com.put.battleship.shared.payloads.server.GameJoinedPayload;
 import io.netty.channel.ChannelHandlerContext;
+
+import static com.put.battleship.server.handlers.WebSocketFrameHandler.sendFrameToCtx;
 
 public class JoinGameHandler extends ClientFrameHandler {
 
@@ -24,8 +27,14 @@ public class JoinGameHandler extends ClientFrameHandler {
         Player player = ContextManager.getPlayerFromContext(this.ctx);
 
         try {
-            GameManager.connectPlayerToRoomByJoinCode(player, payload.joinCode());
+            Game game = GameManager.connectPlayerToRoomByJoinCode(player, payload.joinCode());
             this.sendFrame(new ServerFrame(ServerFrameType.GAME_JOINED, new GameJoinedPayload(payload.joinCode())));
+
+            Player opponent = game.getOpponent(player);
+            ChannelHandlerContext opponentCtx = ContextManager.getContextFromPlayer(opponent);
+            assert opponentCtx != null;
+
+            sendFrameToCtx(opponentCtx, new ServerFrame(ServerFrameType.OPPONENT_JOINED, null));
         } catch (GameDoesNotExistException notExistException) {
             this.sendFrame(new ServerFrame(ServerFrameType.GAME_NOT_FOUND, payload.joinCode()));
         } catch (GameIsFullException isFullException) {
