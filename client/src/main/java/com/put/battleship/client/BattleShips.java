@@ -16,6 +16,7 @@ public class BattleShips {
     public Color enemyColor = Color.rgb(50, 168, 82);
     public HitHandler hitHandler;
     private String roomCode;
+    private String nickname;
     private boolean canAttack = false;
     private boolean youShotHim = false;
     private boolean flag = false;
@@ -29,6 +30,10 @@ public class BattleShips {
 
     public void setRoomCode(String roomCode) {
         this.roomCode = roomCode;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public int getSizex() {
@@ -136,6 +141,7 @@ public class BattleShips {
     public boolean youLose() {
         return yourBoard.allShipsGone();
     }
+
 
     public class AttackNotPermitted extends Throwable {
     }
