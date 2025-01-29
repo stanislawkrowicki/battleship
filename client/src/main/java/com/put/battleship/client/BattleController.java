@@ -61,6 +61,8 @@ public class BattleController extends GridController {
                                         switchToVictoryScreen(event);
                                 } catch (BattleShips.AttackNotPermitted | IOException e) {
                                     throw new RuntimeException(e);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
                                 }
                             }
                         }
@@ -73,7 +75,7 @@ public class BattleController extends GridController {
         return gridPane;
     }
 
-    private void handleAttack(Rectangle rectangle) throws BattleShips.AttackNotPermitted {
+    private void handleAttack(Rectangle rectangle) throws BattleShips.AttackNotPermitted, InterruptedException {
         if (BattleShipsApp.model.handleAttack(GridPane.getRowIndex(rectangle), GridPane.getColumnIndex(rectangle)))
             rectangle.setFill(Color.RED);
         else {
@@ -86,6 +88,6 @@ public class BattleController extends GridController {
     }
 
     public void switchToVictoryScreen(Event event) throws IOException {
-        sceneController.switchScene(event, "victory_screen.fxml");
+        //sceneController.switchScene(event, "victory_screen.fxml");
     }
 }
