@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.put.battleship.shared.Ship;
 import com.put.battleship.shared.frames.ClientFrame;
 import com.put.battleship.shared.frames.ClientFrameType;
-import com.put.battleship.shared.payloads.client.CreateGamePayload;
 import com.put.battleship.shared.payloads.client.ShootPayload;
 import javafx.scene.paint.Color;
 
@@ -15,10 +14,13 @@ public class BattleShips {
     private final Object lock = new Object();
     public Color yourColor = Color.rgb(255, 255, 200);
     public Color enemyColor = Color.rgb(50, 168, 82);
+    public HitHandler hitHandler;
     private String roomCode;
     private boolean canAttack = false;
     private boolean youShotHim = false;
     private boolean flag = false;
+    private int lastShotRowIndex;
+    private int lastShotColIndex;
 
     public BattleShips() {
         yourBoard = new Board();
@@ -65,29 +67,31 @@ public class BattleShips {
         return lock;
     }
 
-    public boolean handleAttack(Integer rowIndex, Integer columnIndex) throws AttackNotPermitted, InterruptedException {
+    public void handleAttack(Integer rowIndex, Integer columnIndex) throws AttackNotPermitted, InterruptedException {
         if (!canAttack)
             throw new AttackNotPermitted();
-
+        lastShotRowIndex = rowIndex;
+        lastShotColIndex = columnIndex;
+        canAttack = false;
         FrameSender.sendFrame(new ClientFrame(ClientFrameType.SHOOT,
-                new ShootPayload(rowIndex, columnIndex)));
-
-
-        synchronized (lock) { // Ensure the thread owns the monitor
-            while (!flag) {
-                try {
-                    lock.wait(); // This will now work correctly
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    e.printStackTrace();
-                }
-            }
-            flag = false;
-            canAttack = false;
-        }
-        boolean hit = enemyBoard.handleAttack(rowIndex, columnIndex);
-        return youShotHim;
+                new ShootPayload(columnIndex, rowIndex)));
     }
+
+    public void handleMyResult(boolean hit) {
+        enemyBoard.handleAttack(hit, lastShotRowIndex, lastShotColIndex);
+        if (hitHandler != null)
+            hitHandler.handleHit(hit, lastShotRowIndex, lastShotColIndex, false);
+
+
+    }
+
+    public void handleEnemyResult(boolean hit, int row, int col) {
+        yourBoard.handleAttack(hit, row, col);
+        if (hitHandler != null)
+            hitHandler.handleHit(hit, row, col, true);
+
+    }
+
 
     public void setYourShips(Ship[] ships) {
         yourBoard.setShips(ships);

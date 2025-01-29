@@ -60,15 +60,15 @@ public class Board {
         return true;
     }
 
-    public boolean handleAttack(Integer row, Integer col) {
-//        boolean hit = isShipInBoard(row, col);
-//        if (!hit) {
-//            boardMatrix[row][col] = -shipCount() - 1;
-//        } else {
-//            boardMatrix[row][col] = -boardMatrix[row][col];
-//        }
-        boardMatrix[row][col] = -1;
-        return true; //hit
+    public void handleAttack(boolean hit, Integer row, Integer col) {
+        if (!hit) {
+            boardMatrix[row][col] = -sizex * sizey - 1;
+        } else {
+            boardMatrix[row][col] = -boardMatrix[row][col];
+            if (boardMatrix[row][col] == 0) {
+                boardMatrix[row][col] = -1;
+            }
+        }
     }
 
     public Ship[] getShips() {

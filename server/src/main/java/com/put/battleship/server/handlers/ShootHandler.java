@@ -39,12 +39,11 @@ public class ShootHandler extends ClientFrameHandler {
                 sendFrame(new ServerFrame(ServerFrameType.YOUR_TURN, null));
             } else {
                 sendFrame(new ServerFrame(ServerFrameType.SHOT_MISS, null));
-                sendFrameToCtx(enemyCtx, new ServerFrame(ServerFrameType.YOUR_TURN, null));
-
-
             }
 
             sendFrameToCtx(enemyCtx, new ServerFrame(ServerFrameType.ENEMY_SHOT, enemyShotPayload));
+            if (!hit)
+                sendFrameToCtx(enemyCtx, new ServerFrame(ServerFrameType.YOUR_TURN, null));
 
         } catch (IllegalArgumentException e) {
             System.out.println("Exception in ShootHandler:");
