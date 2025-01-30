@@ -33,6 +33,10 @@ jar {
     manifest {
         attributes 'Main-Class': 'com.put.battleship.client.BattleShipsApp'
     }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 javafx {
@@ -51,6 +55,9 @@ dependencies {
     implementation 'io.netty:netty-codec-http'
     implementation 'io.netty:netty-transport'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.0'
+
+    implementation 'org.openjfx:javafx-controls:17.0.6'
+    implementation 'org.openjfx:javafx-fxml:17.0.6'
 }
 
 test {
