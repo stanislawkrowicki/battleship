@@ -5,16 +5,16 @@ import com.put.battleship.shared.frames.ServerFrame;
 import io.netty.channel.ChannelHandlerContext;
 import javafx.application.Platform;
 
-public class GameAlreadyExistsHandler extends ServerFrameHandler {
-    public GameAlreadyExistsHandler(ServerFrame frame, ChannelHandlerContext ctx) {
+public class GameNotFoundHandler extends ServerFrameHandler {
+    public GameNotFoundHandler(ServerFrame frame, ChannelHandlerContext ctx) {
         super(frame, ctx);
     }
 
     @Override
     public void handle() {
-        System.out.println("Game already exists");
+        System.out.println("Game not found");
         Platform.runLater(() -> {
-            WebSocketClient.getRoomController().setGameExistsLabel();
+            WebSocketClient.getRoomController().setGameNotFoundLabel();
         });
     }
 }

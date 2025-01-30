@@ -12,18 +12,14 @@ import io.netty.handler.codec.http.websocketx.WebSocketClientProtocolHandler;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 
 public class WebSocketClient {
+    private static BattleController controller;
+    private static RoomSelectController roomController;
     private final String host;
     private final int port;
-
-    private static BattleController controller;
 
     public WebSocketClient(String host, int port) {
         this.host = host;
         this.port = port;
-    }
-
-    public static void setController(BattleController controller) {
-        WebSocketClient.controller = controller;
     }
 
     public static BattleController getController() {
@@ -32,6 +28,22 @@ public class WebSocketClient {
         }
 
         return controller;
+    }
+
+    public static void setController(BattleController controller) {
+        WebSocketClient.controller = controller;
+    }
+
+    public static RoomSelectController getRoomController() {
+        if (roomController == null) {
+            throw new IllegalStateException("FXController is not set");
+        }
+
+        return roomController;
+    }
+
+    public static void setRoomController(RoomSelectController roomSelectController) {
+        WebSocketClient.roomController = roomSelectController;
     }
 
     public void run() throws InterruptedException {
@@ -78,7 +90,7 @@ public class WebSocketClient {
                 workerGroup.shutdownGracefully();
             });
         } catch (Exception e) {
-            System.out.println(String.format("Failed to connect to the server ws://%s:%d/ws", host, port));
+            System.out.printf("Failed to connect to the server ws://%s:%d/ws%n", host, port);
             e.printStackTrace();
         }
     }
