@@ -31,10 +31,9 @@ public class ClientFrameDeserializer extends JsonDeserializer<Object> {
         frame.payload = switch (type) {
             case CREATE_GAME -> mapper.treeToValue(payloadNode, CreateGamePayload.class);
             case JOIN_GAME -> mapper.treeToValue(payloadNode, JoinGamePayload.class);
-            case START_GAME -> mapper.treeToValue(payloadNode, EmptyPayload.class);
             case SET_SHIPS -> mapper.treeToValue(payloadNode, SetShipsPayload.class);
             case SHOOT -> mapper.treeToValue(payloadNode, ShootPayload.class);
-            default -> throw new IllegalArgumentException("Unknown client frame type to deserialize: " + type);
+            default -> mapper.treeToValue(payloadNode, EmptyPayload.class);
         };
 
         return frame;
