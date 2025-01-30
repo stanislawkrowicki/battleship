@@ -24,6 +24,11 @@ public class RoomSelectController {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    public void initialize() {
+        WebSocketClient.setRoomController(this);
+    }
+
     public boolean isCorrectFormatCode(String code) {
         return code.length() <= 8 && code.length() >= 4;
     }
@@ -59,4 +64,11 @@ public class RoomSelectController {
         }
     }
 
+    public void setGameExistsLabel() {
+        errorLabel.setText("Game already exists :( , try different code");
+    }
+
+    public void setGameNotFoundLabel() {
+        errorLabel.setText("Game not found :( , try different code");
+    }
 }
