@@ -84,7 +84,7 @@ public class Board {
     }
 
     public void resetShips() {
-        ships.clear();
+        ships = new ArrayList<Ship>();
         boardMatrix = new int[sizey][sizex];
     }
 
