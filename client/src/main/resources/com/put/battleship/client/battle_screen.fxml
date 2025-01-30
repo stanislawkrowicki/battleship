@@ -34,7 +34,6 @@
                     </children>
                 </HBox>
                 <HBox fx:id="hBoxVirtual" alignment="CENTER" prefHeight="233.0" prefWidth="600.0" spacing="200"/>
-                <Button mnemonicParsing="false" onAction="#switchToEndScreen" text="next scene"/>
             </children>
         </VBox>
     </children>
