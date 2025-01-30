@@ -29,6 +29,7 @@ public class ShootHandler extends ClientFrameHandler {
         ChannelHandlerContext enemyCtx = ContextManager.getContextFromPlayer(opponent);
 
         assert enemyCtx != null;
+        assert !game.isOver();
 
         try {
             // TODO: Check if the player isn't shooting in a place that was already shot
@@ -37,6 +38,13 @@ public class ShootHandler extends ClientFrameHandler {
             if (hit) {
                 sendFrame(new ServerFrame(ServerFrameType.SHOT_HIT, null));
                 sendFrame(new ServerFrame(ServerFrameType.YOUR_TURN, null));
+
+                if (game.allEnemyShipsDestroyed(player)) {
+                    sendFrame(new ServerFrame(ServerFrameType.GAME_WON, null));
+                    sendFrameToCtx(enemyCtx, new ServerFrame(ServerFrameType.GAME_LOST, null));
+                    game.setOver();
+                    GameManager.removeGame(game);
+                }
             } else {
                 sendFrame(new ServerFrame(ServerFrameType.SHOT_MISS, null));
             }

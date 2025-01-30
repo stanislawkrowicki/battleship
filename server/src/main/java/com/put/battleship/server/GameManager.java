@@ -43,8 +43,8 @@ public class GameManager {
         return games;
     }
 
-    public static void removeGame(String id) {
-        games.removeIf(game -> game.getId().toString().equals(id));
+    public static void removeGame(Game game) {
+        games.remove(game);
     }
 
     public static void connectPlayerToRoomById(Player player, String roomId) throws GameDoesNotExistException, GameIsFullException {

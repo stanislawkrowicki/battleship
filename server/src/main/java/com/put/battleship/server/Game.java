@@ -13,6 +13,8 @@ public class Game {
     private final int BOARD_SIZE = 10;
     private Player guest;
     private boolean isStarted = false;
+    private boolean isOver = false;
+
     private Ship[] hostShips = new Ship[10];
     private Ship[] guestShips = new Ship[10];
 
@@ -68,6 +70,14 @@ public class Game {
     public void start() {
         isStarted = true;
         currentPlayer = host;
+    }
+
+    public boolean isOver() {
+        return isOver;
+    }
+
+    public void setOver() {
+        isOver = true;
     }
 
     private String generateJoinCode() {
@@ -168,7 +178,7 @@ public class Game {
         }
     }
 
-    public boolean allShipsDestroyed(Player player) throws IllegalArgumentException {
+    public boolean allEnemyShipsDestroyed(Player player) throws IllegalArgumentException {
         int[][] board;
 
         if (player == host) {

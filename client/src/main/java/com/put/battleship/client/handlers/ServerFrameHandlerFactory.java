@@ -20,6 +20,8 @@ public class ServerFrameHandlerFactory {
             case SHOT_HIT -> new ShotHitHandler(frame, ctx);
             case SHOT_MISS -> new ShotMissHandler(frame, ctx);
             case ENEMY_SHOT -> new EnemyShotHandler(frame, ctx);
+            case GAME_WON -> new GameWonHandler(frame, ctx);
+            case GAME_LOST -> new GameLostHandler(frame, ctx);
             default -> throw new IllegalArgumentException("Unknown client frame type to factory: " + frame.type);
         };
     }

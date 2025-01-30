@@ -51,4 +51,8 @@ public class SceneSwitcher {
     public static void switchToVictoryScreen() {
         switchScene("victory_screen.fxml");
     }
+
+    public static void switchToDefeatScreen() {
+        switchScene("defeat_screen.fxml");
+    }
 }
