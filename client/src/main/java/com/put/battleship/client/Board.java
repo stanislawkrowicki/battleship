@@ -83,6 +83,11 @@ public class Board {
 
     }
 
+    public void resetShips() {
+        ships.clear();
+        boardMatrix = new int[sizey][sizex];
+    }
+
     protected void fillShip(Ship ship, int[][] matrix, int indexOfShip) {
         int x = ship.getHeadX();
         int y = ship.getHeadY();

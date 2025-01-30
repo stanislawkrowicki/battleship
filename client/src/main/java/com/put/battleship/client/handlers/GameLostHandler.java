@@ -1,5 +1,6 @@
 package com.put.battleship.client.handlers;
 
+import com.put.battleship.client.BattleShipsApp;
 import com.put.battleship.client.SceneSwitcher;
 import com.put.battleship.shared.frames.ServerFrame;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,5 +13,6 @@ public class GameLostHandler extends ServerFrameHandler {
     @Override
     public void handle() {
         SceneSwitcher.switchToDefeatScreen();
+        BattleShipsApp.model.resetGame();
     }
 }

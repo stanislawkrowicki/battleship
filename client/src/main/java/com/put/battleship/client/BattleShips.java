@@ -142,6 +142,12 @@ public class BattleShips {
         return yourBoard.allShipsGone();
     }
 
+    public void resetGame() {
+        canAttack = false;
+        yourBoard.resetShips();
+        enemyBoard.resetShips();
+    }
+
 
     public class AttackNotPermitted extends Throwable {
     }
