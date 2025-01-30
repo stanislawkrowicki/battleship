@@ -5,6 +5,7 @@ import com.put.battleship.server.exceptions.GameDoesNotExistException;
 import com.put.battleship.server.exceptions.GameIsFullException;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameManager {
     private static final ArrayList<Game> games = new ArrayList<>();
@@ -36,7 +37,10 @@ public class GameManager {
     }
 
     public static Game getGameByPlayer(Player player) {
-        return games.stream().filter(game -> game.getHost().equals(player) || game.getGuest().equals(player)).findFirst().orElse(null);
+        return games.stream()
+                .filter(game -> Objects.equals(game.getHost(), player) || Objects.equals(game.getGuest(), player))
+                .findFirst()
+                .orElse(null);
     }
 
     public static ArrayList<Game> getGames() {
