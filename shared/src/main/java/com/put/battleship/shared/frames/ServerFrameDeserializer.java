@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.put.battleship.shared.payloads.client.EmptyPayload;
-import com.put.battleship.shared.payloads.server.ConnectedPayload;
-import com.put.battleship.shared.payloads.server.EnemyShotPayload;
-import com.put.battleship.shared.payloads.server.GameCreatedPayload;
-import com.put.battleship.shared.payloads.server.GameJoinedPayload;
+import com.put.battleship.shared.payloads.server.*;
 
 import java.io.IOException;
 
@@ -29,6 +26,7 @@ public class ServerFrameDeserializer extends JsonDeserializer<Object> {
             case GAME_CREATED -> frame.payload = mapper.treeToValue(payloadNode, GameCreatedPayload.class);
             case GAME_JOINED -> frame.payload = mapper.treeToValue(payloadNode, GameJoinedPayload.class);
             case ENEMY_SHOT -> frame.payload = mapper.treeToValue(payloadNode, EnemyShotPayload.class);
+            case GAME_SHIPS_SET -> frame.payload = mapper.treeToValue(payloadNode, GameShipsSetPayload.class);
             default -> mapper.treeToValue(payloadNode, EmptyPayload.class);
         }
 

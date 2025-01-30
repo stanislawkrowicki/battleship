@@ -25,6 +25,9 @@ public class BattleController extends GridController implements HitHandler {
     @FXML
     private Label turnLabel;
 
+    @FXML
+    private Label enemyBoardLabel;
+
     SceneController sceneController = new SceneController();
     GridPane yourBoard, enemyBoard;
 
@@ -107,5 +110,9 @@ public class BattleController extends GridController implements HitHandler {
     public void setEnemyTurn() {
         turnLabel.setText("Waiting for enemy move...");
         turnLabel.setTextFill(Color.RED);
+    }
+
+    public void setEnemyName(String name) {
+        enemyBoardLabel.setText(String.format("%s's Board:", name));
     }
 }

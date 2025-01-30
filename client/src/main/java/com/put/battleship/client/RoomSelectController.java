@@ -44,7 +44,7 @@ public class RoomSelectController {
             BattleShipsApp.model.setRoomCode(roomCode);
             BattleShipsApp.model.setNickname(nickname);
             FrameSender.sendFrame(new ClientFrame(ClientFrameType.CREATE_GAME,
-                    new CreateGamePayload(roomCode)));
+                    new CreateGamePayload(roomCode, nickname)));
         } else {
             errorLabel.setText("Enter correct data format :)");
 
@@ -58,7 +58,7 @@ public class RoomSelectController {
             BattleShipsApp.model.setRoomCode(roomCode);
             BattleShipsApp.model.setNickname(nickname);
             FrameSender.sendFrame(new ClientFrame(ClientFrameType.JOIN_GAME,
-                    new JoinGamePayload(roomCode)));
+                    new JoinGamePayload(roomCode, nickname)));
         } else {
             errorLabel.setText("Enter correct data format :)");
         }

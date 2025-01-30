@@ -25,6 +25,8 @@ public class CreateGameHandler extends ClientFrameHandler {
             return;
         }
 
+        player.setName(payload.playerName());
+        
         try {
             Game game = GameManager.createGame(player, payload.joinCode());
             System.out.println("Game created: " + game.getId() +

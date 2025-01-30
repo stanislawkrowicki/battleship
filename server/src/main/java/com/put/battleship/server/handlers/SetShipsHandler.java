@@ -8,6 +8,7 @@ import com.put.battleship.shared.frames.ClientFrame;
 import com.put.battleship.shared.frames.ServerFrame;
 import com.put.battleship.shared.frames.ServerFrameType;
 import com.put.battleship.shared.payloads.client.SetShipsPayload;
+import com.put.battleship.shared.payloads.server.GameShipsSetPayload;
 import io.netty.channel.ChannelHandlerContext;
 
 import static com.put.battleship.server.handlers.WebSocketFrameHandler.sendFrameToCtx;
@@ -38,17 +39,21 @@ public class SetShipsHandler extends ClientFrameHandler {
 
         if (game.areBothPlayersReady()) {
             game.start();
-            Player opponent = game.getOpponent(player);
-            ServerFrame gameStartedFrame = new ServerFrame(ServerFrameType.GAME_SHIPS_SET, null);
-            ChannelHandlerContext enemyCtx = ContextManager.getContextFromPlayer(opponent);
+            Player host = game.getHost();
+            Player guest = game.getGuest();
 
-            if (enemyCtx == null) {
+            ChannelHandlerContext hostCtx = ContextManager.getContextFromPlayer(host);
+            ChannelHandlerContext guestCtx = ContextManager.getContextFromPlayer(guest);
+
+            if (guestCtx == null) {
                 // TODO: Stop the game
                 throw new IllegalStateException("Opponent is not connected");
             }
 
-            sendFrame(gameStartedFrame);
-            sendFrameToCtx(enemyCtx, gameStartedFrame);
+            assert hostCtx != null;
+
+            sendFrameToCtx(hostCtx, new ServerFrame(ServerFrameType.GAME_SHIPS_SET, new GameShipsSetPayload(guest.getName())));
+            sendFrameToCtx(guestCtx, new ServerFrame(ServerFrameType.GAME_SHIPS_SET, new GameShipsSetPayload(host.getName())));
 
             ChannelHandlerContext startingPlayerCtx = ContextManager.getContextFromPlayer(game.getCurrentPlayer());
             assert startingPlayerCtx != null;

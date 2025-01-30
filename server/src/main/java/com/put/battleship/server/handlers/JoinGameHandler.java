@@ -13,8 +13,6 @@ import com.put.battleship.shared.payloads.client.JoinGamePayload;
 import com.put.battleship.shared.payloads.server.GameJoinedPayload;
 import io.netty.channel.ChannelHandlerContext;
 
-import static com.put.battleship.server.handlers.WebSocketFrameHandler.sendFrameToCtx;
-
 public class JoinGameHandler extends ClientFrameHandler {
 
     public JoinGameHandler(ClientFrame frame, ChannelHandlerContext ctx) {
@@ -26,6 +24,8 @@ public class JoinGameHandler extends ClientFrameHandler {
         JoinGamePayload payload = (JoinGamePayload) this.frame.payload;
         Player player = ContextManager.getPlayerFromContext(this.ctx);
 
+        player.setName(payload.playerName());
+
         try {
             Game game = GameManager.connectPlayerToRoomByJoinCode(player, payload.joinCode());
             this.sendFrame(new ServerFrame(ServerFrameType.GAME_JOINED, new GameJoinedPayload(payload.joinCode())));
@@ -34,7 +34,6 @@ public class JoinGameHandler extends ClientFrameHandler {
             ChannelHandlerContext opponentCtx = ContextManager.getContextFromPlayer(opponent);
             assert opponentCtx != null;
 
-            //sendFrameToCtx(opponentCtx, new ServerFrame(ServerFrameType.OPPONENT_JOINED, null));
         } catch (GameDoesNotExistException notExistException) {
             this.sendFrame(new ServerFrame(ServerFrameType.GAME_NOT_FOUND, null));
         } catch (GameIsFullException isFullException) {
