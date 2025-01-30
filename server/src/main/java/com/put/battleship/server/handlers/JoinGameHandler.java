@@ -34,7 +34,7 @@ public class JoinGameHandler extends ClientFrameHandler {
             ChannelHandlerContext opponentCtx = ContextManager.getContextFromPlayer(opponent);
             assert opponentCtx != null;
 
-            sendFrameToCtx(opponentCtx, new ServerFrame(ServerFrameType.OPPONENT_JOINED, null));
+            //sendFrameToCtx(opponentCtx, new ServerFrame(ServerFrameType.OPPONENT_JOINED, null));
         } catch (GameDoesNotExistException notExistException) {
             this.sendFrame(new ServerFrame(ServerFrameType.GAME_NOT_FOUND, payload.joinCode()));
         } catch (GameIsFullException isFullException) {

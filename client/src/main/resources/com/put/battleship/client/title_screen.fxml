@@ -19,15 +19,21 @@
                   <Image url="@title-ship.png" />
                </image>
             </ImageView>
+            <Label fx:id="errorLabel" textFill="RED">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <Label alignment="BOTTOM_CENTER" prefHeight="52.0" prefWidth="280.0" text="Enter your nickname (1-20 characters):" textFill="#1300ff">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nickNameField" maxWidth="-Infinity" prefHeight="25.0" prefWidth="203.0" />
             <Label alignment="BOTTOM_CENTER" prefHeight="52.0" prefWidth="280.0" text="Enter a room code (4-8 characters):" textFill="#1300ff">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="errorLabel" textFill="RED">
-               <font>
-                  <Font size="16.0" />
-               </font></Label>
             <TextField fx:id="roomCodeField" maxWidth="-Infinity" prefHeight="25.0" prefWidth="203.0" />
             <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                <children>

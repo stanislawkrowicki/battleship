@@ -19,6 +19,6 @@ public class GameCreatedHandler extends ServerFrameHandler {
         GameCreatedPayload payload = (GameCreatedPayload) frame.payload;
         System.out.printf("Game created with id %s and joinCode %s\n", payload.id(), payload.joinCode());
 
-        SceneSwitcher.switchToLoadingScreen();
+        SceneSwitcher.switchToSetShipScreen();
     }
 }

@@ -9,12 +9,10 @@ import java.util.UUID;
 public class Game {
     private final UUID id;
     private final Player host;
-    private Player guest;
     private final String joinCode;
-    private boolean isStarted = false;
-
     private final int BOARD_SIZE = 10;
-
+    private Player guest;
+    private boolean isStarted = false;
     private Ship[] hostShips = new Ship[10];
     private Ship[] guestShips = new Ship[10];
 
@@ -161,7 +159,7 @@ public class Game {
 
         if (board[y][x] > 0) {
             board[y][x] = -1;
-            switchTurn();
+            //switchTurn();
             return true;
         } else {
             board[y][x] = 0;

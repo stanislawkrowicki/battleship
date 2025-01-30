@@ -6,17 +6,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.battleship.client.SceneController">
-   <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="100.0" style="-fx-background-color: #ADD8E6;">
-         <children>
-            <Label text="Looking for a match...">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <Button mnemonicParsing="false" onAction="#switchToSetShipScene" text="next scene" />
-         </children>
-      </VBox>
-   </children>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1"
+           fx:controller="com.put.battleship.client.SceneController">
+    <children>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="100.0"
+              style="-fx-background-color: #ADD8E6;">
+            <children>
+                <Label text="Waiting for an opponent...">
+                    <font>
+                        <Font size="48.0"/>
+                    </font>
+                </Label>
+                <Button mnemonicParsing="false" onAction="#switchToSetShipScene" text="next scene"/>
+            </children>
+        </VBox>
+    </children>
 </StackPane>

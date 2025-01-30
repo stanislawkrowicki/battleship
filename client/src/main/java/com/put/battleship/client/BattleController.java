@@ -1,8 +1,10 @@
 package com.put.battleship.client;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -13,7 +15,7 @@ import java.util.*;
 
 import java.io.IOException;
 
-public class BattleController extends GridController {
+public class BattleController extends GridController implements HitHandler {
 
     private static final int RECTANGLE_WIDTH = 50;
     private static final int RECTANGLE_HEIGHT = 50;
@@ -29,8 +31,14 @@ public class BattleController extends GridController {
     public void initialize() {
         yourBoard = createGrid(false);
         enemyBoard = createGrid(true);
+        BattleShipsApp.model.hitHandler = this;
         fillYourGrid(yourBoard);
         hBoxVirtual.getChildren().addAll(yourBoard, enemyBoard);
+    }
+
+    public void handleHit(boolean hit, int rowIndex, int colIndex, boolean yours) {
+        ObservableList<Node> nodes = (yours ? yourBoard : enemyBoard).getChildren();
+        ((Rectangle) nodes.get(rowIndex * BattleShipsApp.model.getSizex() + colIndex)).setFill(hit ? Color.RED : Color.BLUE);
     }
 
     private GridPane createGrid(boolean isEnemy) {
@@ -45,23 +53,23 @@ public class BattleController extends GridController {
                     final int finalrow = row;
                     final int finalcol = col;
                     rectangle.setOnMouseExited(event -> {
-                        if (BattleShipsApp.model.enemyCellNotYetShot(finalrow, finalcol))
+                        if (BattleShipsApp.model.getCanAttack() && BattleShipsApp.model.enemyCellNotYetShot(finalrow, finalcol))
                             rectangle.setFill(BattleShipsApp.model.getEnemyBackgroundColor());
                     });
                     rectangle.setOnMouseEntered(event -> {
-                        if (BattleShipsApp.model.enemyCellNotYetShot(finalrow, finalcol))
+                        if (BattleShipsApp.model.getCanAttack() && BattleShipsApp.model.enemyCellNotYetShot(finalrow, finalcol))
                             rectangle.setFill(hoverColor);
                     });
                     rectangle.setOnMouseClicked(event -> {
-                        if (BattleShipsApp.model.enemyCellNotYetShot(finalrow, finalcol)) {
-                            if (BattleShipsApp.model.getCanAttack()) {
-                                try {
-                                    handleAttack(rectangle);
-                                    if (BattleShipsApp.model.youWin())
-                                        switchToVictoryScreen(event);
-                                } catch (BattleShips.AttackNotPermitted | IOException e) {
-                                    throw new RuntimeException(e);
-                                }
+                        if (BattleShipsApp.model.getCanAttack() && BattleShipsApp.model.enemyCellNotYetShot(finalrow, finalcol)) {
+                            try {
+                                handleAttack(rectangle);
+                                if (BattleShipsApp.model.youWin())
+                                    switchToVictoryScreen(event);
+                            } catch (BattleShips.AttackNotPermitted | IOException e) {
+                                throw new RuntimeException(e);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
                             }
                         }
                     });
@@ -73,12 +81,8 @@ public class BattleController extends GridController {
         return gridPane;
     }
 
-    private void handleAttack(Rectangle rectangle) throws BattleShips.AttackNotPermitted {
-        if (BattleShipsApp.model.handleAttack(GridPane.getRowIndex(rectangle), GridPane.getColumnIndex(rectangle)))
-            rectangle.setFill(Color.RED);
-        else {
-            rectangle.setFill(Color.BLUE);
-        }
+    private void handleAttack(Rectangle rectangle) throws BattleShips.AttackNotPermitted, InterruptedException {
+        BattleShipsApp.model.handleAttack(GridPane.getRowIndex(rectangle), GridPane.getColumnIndex(rectangle));
     }
 
     public void switchToEndScreen(Event event) throws IOException {
@@ -86,6 +90,6 @@ public class BattleController extends GridController {
     }
 
     public void switchToVictoryScreen(Event event) throws IOException {
-        sceneController.switchScene(event, "victory_screen.fxml");
+        //sceneController.switchScene(event, "victory_screen.fxml");
     }
 }
