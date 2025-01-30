@@ -15,9 +15,23 @@ public class WebSocketClient {
     private final String host;
     private final int port;
 
+    private static BattleController controller;
+
     public WebSocketClient(String host, int port) {
         this.host = host;
         this.port = port;
+    }
+
+    public static void setController(BattleController controller) {
+        WebSocketClient.controller = controller;
+    }
+
+    public static BattleController getController() {
+        if (controller == null) {
+            throw new IllegalStateException("FXController is not set");
+        }
+
+        return controller;
     }
 
     public void run() throws InterruptedException {

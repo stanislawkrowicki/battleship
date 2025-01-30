@@ -35,7 +35,7 @@ public class BattleShipsApp extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(BattleShipsApp.class.getResource("title_screen.fxml"));
         Parent controller = fxmlLoader.load();
         Scene scene = new Scene(controller, 1500, 800);
-        
+
         SceneSwitcher.setStage(stage);
 
         Image icon = new Image(getClass().getResource("battleship.jpg").toExternalForm());

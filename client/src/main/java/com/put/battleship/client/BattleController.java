@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -20,6 +21,10 @@ public class BattleController extends GridController implements HitHandler {
     private static final int RECTANGLE_WIDTH = 50;
     private static final int RECTANGLE_HEIGHT = 50;
     private final Map<String, Object> carrier = new HashMap<>();
+
+    @FXML
+    private Label turnLabel;
+
     SceneController sceneController = new SceneController();
     GridPane yourBoard, enemyBoard;
 
@@ -34,6 +39,7 @@ public class BattleController extends GridController implements HitHandler {
         BattleShipsApp.model.hitHandler = this;
         fillYourGrid(yourBoard);
         hBoxVirtual.getChildren().addAll(yourBoard, enemyBoard);
+        WebSocketClient.setController(this);
     }
 
     public void handleHit(boolean hit, int rowIndex, int colIndex, boolean yours) {
@@ -91,5 +97,15 @@ public class BattleController extends GridController implements HitHandler {
 
     public void switchToVictoryScreen(Event event) throws IOException {
         //sceneController.switchScene(event, "victory_screen.fxml");
+    }
+
+    public void setYourTurn() {
+        turnLabel.setText("Your Turn");
+        turnLabel.setTextFill(Color.GREEN);
+    }
+
+    public void setEnemyTurn() {
+        turnLabel.setText("Waiting for enemy move...");
+        turnLabel.setTextFill(Color.RED);
     }
 }
