@@ -86,7 +86,7 @@ public class BattleController extends GridController implements HitHandler {
     }
 
     public void switchToEndScreen(Event event) throws IOException {
-        sceneController.switchScene(event, "end_screen.fxml");
+        sceneController.switchScene(event, "defeat_screen.fxml");
     }
 
     public void switchToVictoryScreen(Event event) throws IOException {
